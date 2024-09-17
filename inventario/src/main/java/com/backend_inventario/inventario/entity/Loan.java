@@ -84,6 +84,10 @@ public class Loan {
         this.userLoan = userLoan;
     }
 
+    public Loan(){
+
+    }
+
     public Loan(long id, LocalDateTime loan_date, LocalDateTime return_date, int status, User user, UserLoan userLoan) {
         this.id = id;
         this.loan_date = loan_date;
@@ -98,11 +102,6 @@ public class Loan {
         final int prime = 31;
         int result = 1;
         result = prime * result + (int) (id ^ (id >>> 32));
-        result = prime * result + ((loan_date == null) ? 0 : loan_date.hashCode());
-        result = prime * result + ((return_date == null) ? 0 : return_date.hashCode());
-        result = prime * result + status;
-        result = prime * result + ((user == null) ? 0 : user.hashCode());
-        result = prime * result + ((userLoan == null) ? 0 : userLoan.hashCode());
         return result;
     }
 
@@ -116,28 +115,6 @@ public class Loan {
             return false;
         Loan other = (Loan) obj;
         if (id != other.id)
-            return false;
-        if (loan_date == null) {
-            if (other.loan_date != null)
-                return false;
-        } else if (!loan_date.equals(other.loan_date))
-            return false;
-        if (return_date == null) {
-            if (other.return_date != null)
-                return false;
-        } else if (!return_date.equals(other.return_date))
-            return false;
-        if (status != other.status)
-            return false;
-        if (user == null) {
-            if (other.user != null)
-                return false;
-        } else if (!user.equals(other.user))
-            return false;
-        if (userLoan == null) {
-            if (other.userLoan != null)
-                return false;
-        } else if (!userLoan.equals(other.userLoan))
             return false;
         return true;
     }

@@ -89,6 +89,10 @@ public class UserLoan {
         this.phone = phone;
     }
 
+    public UserLoan() {
+        
+    }
+
     public UserLoan(long id, String name, String email, String rna, String enterprise, String identification,
             String phone) {
         this.id = id;
@@ -105,12 +109,6 @@ public class UserLoan {
         final int prime = 31;
         int result = 1;
         result = prime * result + (int) (id ^ (id >>> 32));
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((email == null) ? 0 : email.hashCode());
-        result = prime * result + ((rna == null) ? 0 : rna.hashCode());
-        result = prime * result + ((enterprise == null) ? 0 : enterprise.hashCode());
-        result = prime * result + ((identification == null) ? 0 : identification.hashCode());
-        result = prime * result + ((phone == null) ? 0 : phone.hashCode());
         return result;
     }
 
@@ -125,39 +123,8 @@ public class UserLoan {
         UserLoan other = (UserLoan) obj;
         if (id != other.id)
             return false;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        if (email == null) {
-            if (other.email != null)
-                return false;
-        } else if (!email.equals(other.email))
-            return false;
-        if (rna == null) {
-            if (other.rna != null)
-                return false;
-        } else if (!rna.equals(other.rna))
-            return false;
-        if (enterprise == null) {
-            if (other.enterprise != null)
-                return false;
-        } else if (!enterprise.equals(other.enterprise))
-            return false;
-        if (identification == null) {
-            if (other.identification != null)
-                return false;
-        } else if (!identification.equals(other.identification))
-            return false;
-        if (phone == null) {
-            if (other.phone != null)
-                return false;
-        } else if (!phone.equals(other.phone))
-            return false;
         return true;
     }
 
     
-
 }
