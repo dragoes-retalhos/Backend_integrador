@@ -25,17 +25,17 @@ public class Category {
 
     @ManyToOne
     @JoinColumn(name = "laboratory_item_id_laboratory_item")
-    private LaboratoryItem LaboratoryItemIdLaboratoryItem;
+    private LaboratoryItem associatedLaboratoryItem;
 
     public Category() {
     }
 
     public Category(Long id_category, String titleCategory, String description,
-            LaboratoryItem laboratoryItemIdLaboratoryItem) {
+            LaboratoryItem associatedLaboratoryItem) {
         this.id_category = id_category;
         this.titleCategory = titleCategory;
         this.description = description;
-        LaboratoryItemIdLaboratoryItem = laboratoryItemIdLaboratoryItem;
+        this.associatedLaboratoryItem = associatedLaboratoryItem;
     }
 
     public Long getId_category() {
@@ -62,12 +62,12 @@ public class Category {
         this.description = description;
     }
 
-    public LaboratoryItem getLaboratoryItemIdLaboratoryItem() {
-        return LaboratoryItemIdLaboratoryItem;
+    public LaboratoryItem getAssociatedLaboratoryItem() {
+        return associatedLaboratoryItem;
     }
 
-    public void setLaboratoryItemIdLaboratoryItem(LaboratoryItem laboratoryItemIdLaboratoryItem) {
-        LaboratoryItemIdLaboratoryItem = laboratoryItemIdLaboratoryItem;
+    public void setAssociatedLaboratoryItem(LaboratoryItem associatedLaboratoryItem) {
+        this.associatedLaboratoryItem = associatedLaboratoryItem;
     }
 
     @Override
@@ -96,4 +96,5 @@ public class Category {
     }
 
     
+
 }

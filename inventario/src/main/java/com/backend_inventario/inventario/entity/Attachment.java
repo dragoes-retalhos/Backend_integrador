@@ -38,14 +38,15 @@ public class Attachment {
 
     @ManyToOne
     @JoinColumn(name = "laboratory_item_id_laboratory_item_heritage")
-    private LaboratoryItem LaboratoryItemIdLaboratoryItemHeritage;
+    private LaboratoryItem associatedLaboratoryItem;
 
     public Attachment() {
+        
     }
 
     public Attachment(Long id_attachment, String nameAttachment, String pathAttachment, String typeAttachment,
             Long sizeAttachment, LocalDateTime creationDate, String description,
-            LaboratoryItem laboratoryItemIdLaboratoryItemHeritage) {
+            LaboratoryItem associatedLaboratoryItem) {
         this.id_attachment = id_attachment;
         this.nameAttachment = nameAttachment;
         this.pathAttachment = pathAttachment;
@@ -53,7 +54,7 @@ public class Attachment {
         this.sizeAttachment = sizeAttachment;
         this.creationDate = creationDate;
         this.description = description;
-        LaboratoryItemIdLaboratoryItemHeritage = laboratoryItemIdLaboratoryItemHeritage;
+        this.associatedLaboratoryItem = associatedLaboratoryItem;
     }
 
     public Long getId_attachment() {
@@ -112,12 +113,12 @@ public class Attachment {
         this.description = description;
     }
 
-    public LaboratoryItem getLaboratoryItemIdLaboratoryItemHeritage() {
-        return LaboratoryItemIdLaboratoryItemHeritage;
+    public LaboratoryItem getAssociatedLaboratoryItem() {
+        return associatedLaboratoryItem;
     }
 
-    public void setLaboratoryItemIdLaboratoryItemHeritage(LaboratoryItem laboratoryItemIdLaboratoryItemHeritage) {
-        LaboratoryItemIdLaboratoryItemHeritage = laboratoryItemIdLaboratoryItemHeritage;
+    public void setAssociatedLaboratoryItem(LaboratoryItem associatedLaboratoryItem) {
+        this.associatedLaboratoryItem = associatedLaboratoryItem;
     }
 
     @Override
@@ -146,5 +147,5 @@ public class Attachment {
     }
 
     
-
+    
 }

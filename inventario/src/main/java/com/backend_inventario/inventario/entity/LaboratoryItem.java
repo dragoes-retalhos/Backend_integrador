@@ -1,15 +1,13 @@
 package com.backend_inventario.inventario.entity;
 
 import java.time.LocalDate;
-
-import org.hibernate.annotations.ManyToAny;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -42,9 +40,9 @@ public class LaboratoryItem {
     @Column(name = "next_calibration")
     private LocalDate  nextCalibration;
 
-    @ManyToAny
+    @ManyToOne
     @JoinColumn(name = "maintenance_id_maintenance")
-    private Maintenance maintenanceIdMaintenance;
+    private Maintenance associatedMaintenance;
 
     public LaboratoryItem(){
 
@@ -52,7 +50,7 @@ public class LaboratoryItem {
 
     public LaboratoryItem(Long idLaboratoryItemHeritage, String nameItem, String brand, String model,
             String serialNumber, String invoiceNumber, LocalDate entryDate, LocalDate nextCalibration,
-            Maintenance maintenanceIdMaintenance) {
+            Maintenance associatedMaintenance) {
         this.idLaboratoryItemHeritage = idLaboratoryItemHeritage;
         this.nameItem = nameItem;
         this.brand = brand;
@@ -61,7 +59,7 @@ public class LaboratoryItem {
         this.invoiceNumber = invoiceNumber;
         this.entryDate = entryDate;
         this.nextCalibration = nextCalibration;
-        this.maintenanceIdMaintenance = maintenanceIdMaintenance;
+        this.associatedMaintenance = associatedMaintenance;
     }
 
     public Long getIdLaboratoryItemHeritage() {
@@ -128,12 +126,12 @@ public class LaboratoryItem {
         this.nextCalibration = nextCalibration;
     }
 
-    public Maintenance getMaintenanceIdMaintenance() {
-        return maintenanceIdMaintenance;
+    public Maintenance getAssociatedMaintenance() {
+        return associatedMaintenance;
     }
 
-    public void setMaintenanceIdMaintenance(Maintenance maintenanceIdMaintenance) {
-        this.maintenanceIdMaintenance = maintenanceIdMaintenance;
+    public void setAssociatedMaintenance(Maintenance associatedMaintenance) {
+        this.associatedMaintenance = associatedMaintenance;
     }
 
     @Override
@@ -162,9 +160,5 @@ public class LaboratoryItem {
     }
 
     
-
-    
-
-        
 
 }

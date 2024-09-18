@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,17 +23,18 @@ public class Location {
     @Column(name = "room")
     private String room;
 
+    @ManyToOne
     @JoinColumn(name = "laboratory_item_id_laboratory_item")
-    private LaboratoryItem LaboratoryItemIdLaboratoryItem;
+    private LaboratoryItem associatedLaboratoryItem;
 
     public Location() {
     }
 
-    public Location(Long idLocation, String building, String room, LaboratoryItem laboratoryItemIdLaboratoryItem) {
+    public Location(Long idLocation, String building, String room, LaboratoryItem associatedLaboratoryItem) {
         this.idLocation = idLocation;
         this.building = building;
         this.room = room;
-        LaboratoryItemIdLaboratoryItem = laboratoryItemIdLaboratoryItem;
+        this.associatedLaboratoryItem = associatedLaboratoryItem;
     }
 
     public Long getIdLocation() {
@@ -59,12 +61,12 @@ public class Location {
         this.room = room;
     }
 
-    public LaboratoryItem getLaboratoryItemIdLaboratoryItem() {
-        return LaboratoryItemIdLaboratoryItem;
+    public LaboratoryItem getAssociatedLaboratoryItem() {
+        return associatedLaboratoryItem;
     }
 
-    public void setLaboratoryItemIdLaboratoryItem(LaboratoryItem laboratoryItemIdLaboratoryItem) {
-        LaboratoryItemIdLaboratoryItem = laboratoryItemIdLaboratoryItem;
+    public void setAssociatedLaboratoryItem(LaboratoryItem associatedLaboratoryItem) {
+        this.associatedLaboratoryItem = associatedLaboratoryItem;
     }
 
     @Override
@@ -91,6 +93,7 @@ public class Location {
             return false;
         return true;
     }
+
 
     
 }

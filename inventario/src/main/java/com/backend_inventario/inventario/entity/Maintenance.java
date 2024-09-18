@@ -17,6 +17,7 @@ public class Maintenance {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_maintenance")
     private Long idMaintenance;
 
     @Column(name = "maintenance_type")
@@ -26,7 +27,7 @@ public class Maintenance {
     private String description;
     
     @Column(name = "status")
-    private int status;
+    private Integer status;
     
     @Column(name = "cost")
     private double cost;
@@ -38,16 +39,17 @@ public class Maintenance {
     private LocalDate deliveryDate;
 
     @ManyToOne
-    @JoinColumn(name = "attachment")
-    private Attachment attachment_id_attachment;
+    @JoinColumn(name = "attachment_id_attachment")
+    private Attachment associatedAttachment;
 
 
     public Maintenance (){
 
-    } 
+    }
 
-    public Maintenance(Long idMaintenance, Long maintenanceType, String description, int status, double cost,
-            LocalDateTime creationDate, LocalDate deliveryDate, Attachment attachment_id_attachment) {
+
+    public Maintenance(Long idMaintenance, Long maintenanceType, String description, Integer status, double cost,
+            LocalDateTime creationDate, LocalDate deliveryDate, Attachment associatedAttachment) {
         this.idMaintenance = idMaintenance;
         this.maintenanceType = maintenanceType;
         this.description = description;
@@ -55,72 +57,90 @@ public class Maintenance {
         this.cost = cost;
         this.creationDate = creationDate;
         this.deliveryDate = deliveryDate;
-        this.attachment_id_attachment = attachment_id_attachment;
+        this.associatedAttachment = associatedAttachment;
     }
+
 
     public Long getIdMaintenance() {
         return idMaintenance;
     }
 
+
     public void setIdMaintenance(Long idMaintenance) {
         this.idMaintenance = idMaintenance;
     }
+
 
     public Long getMaintenanceType() {
         return maintenanceType;
     }
 
+
     public void setMaintenanceType(Long maintenanceType) {
         this.maintenanceType = maintenanceType;
     }
+
 
     public String getDescription() {
         return description;
     }
 
+
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public int getStatus() {
+
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+
+    public void setStatus(Integer status) {
         this.status = status;
     }
+
 
     public double getCost() {
         return cost;
     }
 
+
     public void setCost(double cost) {
         this.cost = cost;
     }
+
 
     public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
+
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
+
 
     public LocalDate getDeliveryDate() {
         return deliveryDate;
     }
 
+
     public void setDeliveryDate(LocalDate deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 
-    public Attachment getAttachment_id_attachment() {
-        return attachment_id_attachment;
+
+    public Attachment getAssociatedAttachment() {
+        return associatedAttachment;
     }
 
-    public void setAttachment_id_attachment(Attachment attachment_id_attachment) {
-        this.attachment_id_attachment = attachment_id_attachment;
+
+    public void setAssociatedAttachment(Attachment associatedAttachment) {
+        this.associatedAttachment = associatedAttachment;
     }
+
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -128,6 +148,8 @@ public class Maintenance {
         result = prime * result + ((idMaintenance == null) ? 0 : idMaintenance.hashCode());
         return result;
     }
+
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -143,7 +165,7 @@ public class Maintenance {
         } else if (!idMaintenance.equals(other.idMaintenance))
             return false;
         return true;
-    }
+    } 
 
     
 

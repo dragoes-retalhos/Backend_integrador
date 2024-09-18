@@ -20,21 +20,34 @@ public class Loan {
     private long id; 
 
     @Column(name = "loan_date")
-    private LocalDateTime loan_date;
+    private LocalDateTime loanDate;
 
     @Column(name = "return_date")
-    private LocalDateTime return_date;
+    private LocalDateTime returnDate;
 
     @Column(name = "status")
     private int status;
 
     @ManyToOne
     @JoinColumn(name = "user_id_user")
-    private User user;
+    private User associatedUser;
 
     @ManyToOne
     @JoinColumn(name = "user_loan_iduser_loan")
-    private UserLoan userLoan;
+    private UserLoan associatedUserLoan;
+
+    public Loan() {
+    }
+
+    public Loan(long id, LocalDateTime loanDate, LocalDateTime returnDate, int status, User associatedUser,
+            UserLoan associatedUserLoan) {
+        this.id = id;
+        this.loanDate = loanDate;
+        this.returnDate = returnDate;
+        this.status = status;
+        this.associatedUser = associatedUser;
+        this.associatedUserLoan = associatedUserLoan;
+    }
 
     public long getId() {
         return id;
@@ -44,20 +57,20 @@ public class Loan {
         this.id = id;
     }
 
-    public LocalDateTime getLoan_date() {
-        return loan_date;
+    public LocalDateTime getLoanDate() {
+        return loanDate;
     }
 
-    public void setLoan_date(LocalDateTime loan_date) {
-        this.loan_date = loan_date;
+    public void setLoanDate(LocalDateTime loanDate) {
+        this.loanDate = loanDate;
     }
 
-    public LocalDateTime getReturn_date() {
-        return return_date;
+    public LocalDateTime getReturnDate() {
+        return returnDate;
     }
 
-    public void setReturn_date(LocalDateTime return_date) {
-        this.return_date = return_date;
+    public void setReturnDate(LocalDateTime returnDate) {
+        this.returnDate = returnDate;
     }
 
     public int getStatus() {
@@ -68,33 +81,20 @@ public class Loan {
         this.status = status;
     }
 
-    public User getUser() {
-        return user;
+    public User getAssociatedUser() {
+        return associatedUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAssociatedUser(User associatedUser) {
+        this.associatedUser = associatedUser;
     }
 
-    public UserLoan getUserLoan() {
-        return userLoan;
+    public UserLoan getAssociatedUserLoan() {
+        return associatedUserLoan;
     }
 
-    public void setUserLoan(UserLoan userLoan) {
-        this.userLoan = userLoan;
-    }
-
-    public Loan(){
-
-    }
-
-    public Loan(long id, LocalDateTime loan_date, LocalDateTime return_date, int status, User user, UserLoan userLoan) {
-        this.id = id;
-        this.loan_date = loan_date;
-        this.return_date = return_date;
-        this.status = status;
-        this.user = user;
-        this.userLoan = userLoan;
+    public void setAssociatedUserLoan(UserLoan associatedUserLoan) {
+        this.associatedUserLoan = associatedUserLoan;
     }
 
     @Override
@@ -120,4 +120,5 @@ public class Loan {
     }
 
     
+
 }

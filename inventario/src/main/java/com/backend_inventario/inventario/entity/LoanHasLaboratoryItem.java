@@ -11,45 +11,44 @@ public class LoanHasLaboratoryItem {
 
     @ManyToOne
     @JoinColumn(name = "loan_id_loan")
-    private Loan loanIdLoan;
+    private Loan associatedLoan;
 
     @ManyToOne
     @JoinColumn(name = "laboratory_item_id_laboratory_item")
-    private LaboratoryItem laboratoryItemIdLaboratoryItem;
+    private LaboratoryItem associatedLaboratoryItem;
 
     public LoanHasLaboratoryItem() {
 
         
     }
 
-    public LoanHasLaboratoryItem(Loan loanIdLoan, LaboratoryItem laboratoryItemIdLaboratoryItem) {
-        this.loanIdLoan = loanIdLoan;
-        this.laboratoryItemIdLaboratoryItem = laboratoryItemIdLaboratoryItem;
+    public LoanHasLaboratoryItem(Loan associatedLoan, LaboratoryItem associatedLaboratoryItem) {
+        this.associatedLoan = associatedLoan;
+        this.associatedLaboratoryItem = associatedLaboratoryItem;
     }
 
-    public Loan getLoanIdLoan() {
-        return loanIdLoan;
+    public Loan getAssociatedLoan() {
+        return associatedLoan;
     }
 
-    public void setLoanIdLoan(Loan loanIdLoan) {
-        this.loanIdLoan = loanIdLoan;
+    public void setAssociatedLoan(Loan associatedLoan) {
+        this.associatedLoan = associatedLoan;
     }
 
-    public LaboratoryItem getLaboratoryItemIdLaboratoryItem() {
-        return laboratoryItemIdLaboratoryItem;
+    public LaboratoryItem getAssociatedLaboratoryItem() {
+        return associatedLaboratoryItem;
     }
 
-    public void setLaboratoryItemIdLaboratoryItem(LaboratoryItem laboratoryItemIdLaboratoryItem) {
-        this.laboratoryItemIdLaboratoryItem = laboratoryItemIdLaboratoryItem;
+    public void setAssociatedLaboratoryItem(LaboratoryItem associatedLaboratoryItem) {
+        this.associatedLaboratoryItem = associatedLaboratoryItem;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((loanIdLoan == null) ? 0 : loanIdLoan.hashCode());
-        result = prime * result
-                + ((laboratoryItemIdLaboratoryItem == null) ? 0 : laboratoryItemIdLaboratoryItem.hashCode());
+        result = prime * result + ((associatedLoan == null) ? 0 : associatedLoan.hashCode());
+        result = prime * result + ((associatedLaboratoryItem == null) ? 0 : associatedLaboratoryItem.hashCode());
         return result;
     }
 
@@ -62,20 +61,19 @@ public class LoanHasLaboratoryItem {
         if (getClass() != obj.getClass())
             return false;
         LoanHasLaboratoryItem other = (LoanHasLaboratoryItem) obj;
-        if (loanIdLoan == null) {
-            if (other.loanIdLoan != null)
+        if (associatedLoan == null) {
+            if (other.associatedLoan != null)
                 return false;
-        } else if (!loanIdLoan.equals(other.loanIdLoan))
+        } else if (!associatedLoan.equals(other.associatedLoan))
             return false;
-        if (laboratoryItemIdLaboratoryItem == null) {
-            if (other.laboratoryItemIdLaboratoryItem != null)
+        if (associatedLaboratoryItem == null) {
+            if (other.associatedLaboratoryItem != null)
                 return false;
-        } else if (!laboratoryItemIdLaboratoryItem.equals(other.laboratoryItemIdLaboratoryItem))
+        } else if (!associatedLaboratoryItem.equals(other.associatedLaboratoryItem))
             return false;
         return true;
     }
 
     
     
-
 }
