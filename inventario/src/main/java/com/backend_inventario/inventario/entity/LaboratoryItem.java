@@ -1,6 +1,9 @@
 package com.backend_inventario.inventario.entity;
 
 import java.time.LocalDate;
+
+import com.backend_inventario.inventario.entity.Enum.Status;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,16 +43,19 @@ public class LaboratoryItem {
     @Column(name = "next_calibration")
     private LocalDate  nextCalibration;
 
+    @Column(name = "Status")
+    private Status status;
+
     @ManyToOne
     @JoinColumn(name = "maintenance_id_maintenance")
     private Maintenance associatedMaintenance;
 
-    public LaboratoryItem(){
-
+    
+    public LaboratoryItem() {
     }
 
     public LaboratoryItem(Long idLaboratoryItemHeritage, String nameItem, String brand, String model,
-            String serialNumber, String invoiceNumber, LocalDate entryDate, LocalDate nextCalibration,
+            String serialNumber, String invoiceNumber, LocalDate entryDate, LocalDate nextCalibration, Status status,
             Maintenance associatedMaintenance) {
         this.idLaboratoryItemHeritage = idLaboratoryItemHeritage;
         this.nameItem = nameItem;
@@ -59,6 +65,7 @@ public class LaboratoryItem {
         this.invoiceNumber = invoiceNumber;
         this.entryDate = entryDate;
         this.nextCalibration = nextCalibration;
+        this.status = status;
         this.associatedMaintenance = associatedMaintenance;
     }
 
@@ -124,6 +131,14 @@ public class LaboratoryItem {
 
     public void setNextCalibration(LocalDate nextCalibration) {
         this.nextCalibration = nextCalibration;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Maintenance getAssociatedMaintenance() {
