@@ -8,31 +8,34 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "user_loan")
 public class UserLoan {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "iduser_loan", nullable = false)
     private long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
     
-    @Column(name = "rna")
+    @Column(name = "rna", unique = true)
     private String rna;
     
     @Column(name = "enterprise")
     private String enterprise;
     
-    @Column(name = "identification")
+    @Column(name = "identification", unique = true, nullable = true)
     private String identification;
     
-    @Column(name = "phone")
+    @Column(name = "phone", unique = true, nullable = false)
     private String phone;
 
     @Column(name = "Status")

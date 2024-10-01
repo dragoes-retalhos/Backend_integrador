@@ -19,31 +19,31 @@ public class LaboratoryItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_laboratory_item_heritage")
+    @Column(name = "id_laboratory_item_heritage", nullable = false)
     private Long idLaboratoryItemHeritage;
 
-    @Column(name = "name_item")
+    @Column(name = "name_item", nullable = false)
     private String nameItem;
 
-    @Column(name = "brand")
+    @Column(name = "brand", nullable = true)
     private String brand;
 
-    @Column(name = "model")
+    @Column(name = "model", nullable = true)
     private String model;
 
-    @Column(name = "serial_number")
+    @Column(name = "serial_number", nullable = true)
     private String serialNumber;
 
-    @Column(name = "invoice_number")
+    @Column(name = "invoice_number", nullable = true)
     private String invoiceNumber;
 
-    @Column(name = "entry_date")
+    @Column(name = "entry_date", nullable = true)
     private LocalDate entryDate;
 
-    @Column(name = "next_calibration")
+    @Column(name = "next_calibration", nullable = true)
     private LocalDate  nextCalibration;
 
-    @Column(name = "Status")
+    @Column(name = "Status", nullable = false)
     private Status status;
 
     @ManyToOne
