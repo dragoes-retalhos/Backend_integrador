@@ -1,6 +1,9 @@
 package com.backend_inventario.inventario.entity;
 
 import java.time.LocalDate;
+
+import com.backend_inventario.inventario.entity.Enum.Status;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,40 +19,43 @@ public class LaboratoryItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_laboratory_item_heritage")
+    @Column(name = "id_laboratory_item_heritage", nullable = false)
     private Long idLaboratoryItemHeritage;
 
-    @Column(name = "name_item")
+    @Column(name = "name_item", nullable = false)
     private String nameItem;
 
-    @Column(name = "brand")
+    @Column(name = "brand", nullable = true)
     private String brand;
 
-    @Column(name = "model")
+    @Column(name = "model", nullable = true)
     private String model;
 
-    @Column(name = "serial_number")
+    @Column(name = "serial_number", nullable = true)
     private String serialNumber;
 
-    @Column(name = "invoice_number")
+    @Column(name = "invoice_number", nullable = true)
     private String invoiceNumber;
 
-    @Column(name = "entry_date")
+    @Column(name = "entry_date", nullable = true)
     private LocalDate entryDate;
 
-    @Column(name = "next_calibration")
+    @Column(name = "next_calibration", nullable = true)
     private LocalDate  nextCalibration;
+
+    @Column(name = "Status", nullable = false)
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "maintenance_id_maintenance")
     private Maintenance associatedMaintenance;
 
-    public LaboratoryItem(){
-
+    
+    public LaboratoryItem() {
     }
 
     public LaboratoryItem(Long idLaboratoryItemHeritage, String nameItem, String brand, String model,
-            String serialNumber, String invoiceNumber, LocalDate entryDate, LocalDate nextCalibration,
+            String serialNumber, String invoiceNumber, LocalDate entryDate, LocalDate nextCalibration, Status status,
             Maintenance associatedMaintenance) {
         this.idLaboratoryItemHeritage = idLaboratoryItemHeritage;
         this.nameItem = nameItem;
@@ -59,6 +65,7 @@ public class LaboratoryItem {
         this.invoiceNumber = invoiceNumber;
         this.entryDate = entryDate;
         this.nextCalibration = nextCalibration;
+        this.status = status;
         this.associatedMaintenance = associatedMaintenance;
     }
 
@@ -124,6 +131,14 @@ public class LaboratoryItem {
 
     public void setNextCalibration(LocalDate nextCalibration) {
         this.nextCalibration = nextCalibration;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Maintenance getAssociatedMaintenance() {

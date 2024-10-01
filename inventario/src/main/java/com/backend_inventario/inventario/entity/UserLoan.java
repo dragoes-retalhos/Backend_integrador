@@ -1,37 +1,45 @@
 package com.backend_inventario.inventario.entity;
 
+import com.backend_inventario.inventario.entity.Enum.Status;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "user_loan")
 public class UserLoan {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "iduser_loan", nullable = false)
     private long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
     
-    @Column(name = "rna")
+    @Column(name = "rna", unique = true)
     private String rna;
     
     @Column(name = "enterprise")
     private String enterprise;
     
-    @Column(name = "identification")
+    @Column(name = "identification", unique = true, nullable = true)
     private String identification;
     
-    @Column(name = "phone")
+    @Column(name = "phone", unique = true, nullable = false)
     private String phone;
+
+    @Column(name = "Status")
+    private Status status;
 
     public long getId() {
         return id;
@@ -89,12 +97,20 @@ public class UserLoan {
         this.phone = phone;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public UserLoan() {
         
     }
 
     public UserLoan(long id, String name, String email, String rna, String enterprise, String identification,
-            String phone) {
+            String phone, Status status) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -102,6 +118,7 @@ public class UserLoan {
         this.enterprise = enterprise;
         this.identification = identification;
         this.phone = phone;
+        this.status = status;
     }
 
     @Override
@@ -125,6 +142,7 @@ public class UserLoan {
             return false;
         return true;
     }
+
 
     
 }
