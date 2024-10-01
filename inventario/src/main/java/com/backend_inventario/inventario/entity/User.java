@@ -6,9 +6,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class User {
 
     @Id
@@ -16,24 +19,17 @@ public class User {
     @Column(name = "id_user")
     private Long id;
 
-    @Column(name = "name_user", length = 250, nullable = false)
+    @Column(name = "name_user", length = 250)
     private String name;
 
     @Column(name = "email", length = 250, nullable = false, unique = true)
+    @Email(message = "E-mail ja esta cadastrado no sistema")
     private String email;
 
+    @NotNull(message = "Senha invalida")
     @Column(name = "password", length = 255, nullable = false)
     private String password;
 
-
-    public User() {
-    }
-
-    public User(String name, String email, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
 
     public Long getId() {
         return id;
@@ -67,6 +63,8 @@ public class User {
         this.password = password;
     }
 
+   
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -91,5 +89,6 @@ public class User {
             return false;
         return true;
     }
+
     
 }
