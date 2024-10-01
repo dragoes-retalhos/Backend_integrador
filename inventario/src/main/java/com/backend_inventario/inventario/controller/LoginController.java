@@ -1,6 +1,9 @@
 package com.backend_inventario.inventario.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,27 +11,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend_inventario.inventario.entity.User;
-import com.backend_inventario.inventario.service.UserService;
+import com.backend_inventario.inventario.repository.UserRepository;
 
 
 
 @RestController
-@RequestMapping(value = "/api/login")
+@RequestMapping("/api/login")
 public class LoginController {
 
     @Autowired
-    UserService userService;
-    
+    UserRepository userRepository;
+
     @PostMapping("/authentication")
-    public ResponseEntity<User> login(@RequestBody User user){
-
-        User userLogin = userService.authentication(user.getEmail(), user.getPassword());
-        return ResponseEntity.ok(userLogin);
-
+    public ResponseEntity<String> authentication(@RequestBody User user){
         
+        Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
+        if(existingUser.isPresent()){
+
+            if(existingUser.get().getPassword().equals(user.getPassword())){
+
+               return ResponseEntity.ok("Login Realizado com sucesso"); 
+
+            } else {
+
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha inválida.");
+            }
+
+        }  
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado.");     
+
     }
-        
-        
-    
+         
 
 }

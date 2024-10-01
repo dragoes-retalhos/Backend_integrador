@@ -64,20 +64,6 @@ public class UserService {
     }
 
 
-    public User authentication(String email, String password){
-        
-        User user = userRepository.findByEmail(email)
-        
-        .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-
-        if (user.getPassword().equals(password)) {
-            return user;
-        } else {
-            throw new RuntimeException("Incorrect password");
-        }
-    
-
-    }
 
         
     
