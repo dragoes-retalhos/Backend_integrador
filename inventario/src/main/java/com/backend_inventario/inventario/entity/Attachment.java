@@ -1,6 +1,8 @@
 package com.backend_inventario.inventario.entity;
 
 import java.time.LocalDateTime;
+
+import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,25 +17,27 @@ import jakarta.persistence.Table;
 public class Attachment {
 
     @Id
+    @NonNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_attachment", nullable = false)
     private Long id_attachment;
     
-    @Column(name = "name_attachment")
+    @Column(name = "name_attachment", nullable = true)
     private String nameAttachment;
     
-    @Column(name = "path_attachment")
+    @Column(name = "path_attachment", nullable = true)
     private String pathAttachment;
     
-    @Column(name = "type_attachment")
+    @Column(name = "type_attachment", nullable = true)
     private String typeAttachment;
     
-    @Column(name = "size_attachment")
+    @Column(name = "size_attachment", nullable = true)
     private Long sizeAttachment;
     
-    @Column(name = "creation_date")
+    @Column(name = "creation_date", nullable = true)
     private LocalDateTime creationDate;
     
-    @Column(name = "description")
+    @Column(name = "description", nullable = true)
     private String description;
 
     @ManyToOne

@@ -8,19 +8,22 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "category")
 public class Category {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_category", nullable = false)
     private Long id_category;
 
-    @Column(name = "title_category")
+    @Column(name = "title_category", length = 45, nullable = true)
     private String titleCategory;
     
-    @Column(name = "description")
+    @Column(name = "description", nullable = true)
     private String description;
 
     @ManyToOne

@@ -1,5 +1,6 @@
 package com.backend_inventario.inventario.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import jakarta.persistence.Column;
@@ -10,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "maintenance")
@@ -17,29 +19,31 @@ public class Maintenance {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_maintenance")
+    @Column(name = "id_maintenance", nullable = false)
+    @NotNull
     private Long idMaintenance;
 
-    @Column(name = "maintenance_type")
-    private Long maintenanceType;
+    @Column(name = "maintenance_type", nullable = true)
+    private Integer maintenanceType;
     
-    @Column(name = "description")
+    @Column(name = "description", length = 1000 ,nullable = true)
     private String description;
     
-    @Column(name = "status")
+    @Column(name = "status", nullable = true)
     private Integer status;
     
-    @Column(name = "cost")
-    private double cost;
+    @Column(name = "cost", precision = 10, scale = 2)
+    private BigDecimal cost;
     
-    @Column(name = "creation_date")
+    @Column(name = "creation_date", nullable =  true)
     private LocalDateTime creationDate;
     
-    @Column(name = "delivery_date")
+    @Column(name = "delivery_date", nullable = true)
     private LocalDate deliveryDate;
 
     @ManyToOne
-    @JoinColumn(name = "attachment_id_attachment")
+    @JoinColumn(name = "attachment_id_attachment", nullable = false)
+    @NotNull    
     private Attachment associatedAttachment;
 
 
@@ -48,7 +52,7 @@ public class Maintenance {
     }
 
 
-    public Maintenance(Long idMaintenance, Long maintenanceType, String description, Integer status, double cost,
+    public Maintenance(Long idMaintenance, Integer maintenanceType, String description, Integer status, BigDecimal cost,
             LocalDateTime creationDate, LocalDate deliveryDate, Attachment associatedAttachment) {
         this.idMaintenance = idMaintenance;
         this.maintenanceType = maintenanceType;
@@ -71,12 +75,12 @@ public class Maintenance {
     }
 
 
-    public Long getMaintenanceType() {
+    public Integer getMaintenanceType() {
         return maintenanceType;
     }
 
 
-    public void setMaintenanceType(Long maintenanceType) {
+    public void setMaintenanceType(Integer maintenanceType) {
         this.maintenanceType = maintenanceType;
     }
 
@@ -101,12 +105,12 @@ public class Maintenance {
     }
 
 
-    public double getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
 
-    public void setCost(double cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 
