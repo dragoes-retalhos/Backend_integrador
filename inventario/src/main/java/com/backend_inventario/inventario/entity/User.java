@@ -11,7 +11,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
+@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class User {
 
     @Id

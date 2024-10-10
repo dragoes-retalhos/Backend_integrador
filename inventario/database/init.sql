@@ -195,3 +195,81 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+INSERT INTO `mydb`.`laboratory_item` (name_item, brand, model, serial_number, invoice_number, entry_date, next_calibration) VALUES
+('Microscope A', 'BrandX', 'Model1', 'SN123456', 'INV1001', '2024-01-15', '2025-01-15'),
+('Spectrophotometer B', 'BrandY', 'Model2', 'SN789012', 'INV1002', '2024-02-20', '2025-02-20'),
+('Pipette C', 'BrandZ', 'Model3', 'SN345678', 'INV1003', '2024-03-25', '2025-03-25'),
+('Centrifuge D', 'BrandX', 'Model4', 'SN901234', 'INV1004', '2024-04-10', '2025-04-10'),
+('Incubator E', 'BrandY', 'Model5', 'SN567890', 'INV1005', '2024-05-15', '2025-05-15'),
+('Biosafety Cabinet F', 'BrandZ', 'Model6', 'SN135792', 'INV1006', '2024-06-20', '2025-06-20'),
+('Refrigerator G', 'BrandX', 'Model7', 'SN246803', 'INV1007', '2024-07-25', '2025-07-25'),
+('Fume Hood H', 'BrandY', 'Model8', 'SN864209', 'INV1008', '2024-08-30', '2025-08-30'),
+('Water Bath I', 'BrandZ', 'Model9', 'SN975310', 'INV1009', '2024-09-05', '2025-09-05'),
+('pH Meter J', 'BrandX', 'Model10', 'SN111213', 'INV1010', '2024-10-01', '2025-10-01');
+
+
+
+INSERT INTO `mydb`.`maintenance` (maintenance_type, description, status, cost, creation_date, delivery_date, laboratory_item_id_laboratory_item_heritage) VALUES
+(1, 'Routine checkup', 1, 150.00, '2024-01-20 10:00:00', '2024-01-22', 1),
+(2, 'Calibration required', 1, 200.00, '2024-02-25 11:00:00', '2024-02-27', 2),
+(1, 'Part replacement', 2, 300.00, '2024-03-30 12:00:00', '2024-04-01', 3),
+(3, 'Software update', 1, 100.00, '2024-04-05 09:00:00', '2024-04-06', 4),
+(2, 'Cleaning and service', 1, 250.00, '2024-05-10 14:00:00', '2024-05-12', 5),
+(1, 'Calibration and check', 1, 175.00, '2024-06-15 08:00:00', '2024-06-16', 6),
+(2, 'Repair needed', 3, 400.00, '2024-07-20 13:00:00', '2024-07-22', 7),
+(3, 'Replacement of filters', 1, 120.00, '2024-08-25 15:00:00', '2024-08-26', 8),
+(1, 'Annual service', 1, 350.00, '2024-09-15 10:30:00', '2024-09-18', 9),
+(2, 'General maintenance', 1, 200.00, '2024-10-01 16:00:00', '2024-10-03', 10);
+
+
+
+INSERT INTO `mydb`.`attachment` (name_attachment, path_attachment, type_attachment, size_attachment, creation_date, description, laboratory_item_id_laboratory_item_heritage, maintenance_id_maintenance) VALUES
+('Microscope Manual', '/attachments/microscope_manual.pdf', 'document', 51200, '2024-01-21 10:00:00', 'User manual for microscope', 1, 1),
+('Calibration Report', '/attachments/calibration_report.pdf', 'document', 102400, '2024-02-26 11:00:00', 'Calibration report for spectrophotometer', 2, 2),
+('Pipette Service Log', '/attachments/pipette_service_log.pdf', 'document', 25600, '2024-03-31 12:00:00', 'Service log for pipette', 3, 3),
+('Centrifuge Manual', '/attachments/centrifuge_manual.pdf', 'document', 51200, '2024-04-06 09:00:00', 'User manual for centrifuge', 4, 4),
+('Incubator Calibration', '/attachments/incubator_calibration.pdf', 'document', 76800, '2024-05-11 14:00:00', 'Calibration document for incubator', 5, 5),
+('Maintenance Report', '/attachments/maintenance_report.pdf', 'document', 128000, '2024-06-17 08:00:00', 'Maintenance report for biosafety cabinet', 6, 6),
+('Refrigerator Inspection', '/attachments/refrigerator_inspection.pdf', 'document', 25600, '2024-07-23 13:00:00', 'Inspection report for refrigerator', 7, 7),
+('Fume Hood Compliance', '/attachments/fume_hood_compliance.pdf', 'document', 51200, '2024-08-28 15:00:00', 'Compliance report for fume hood', 8, 8),
+('Water Bath Manual', '/attachments/water_bath_manual.pdf', 'document', 51200, '2024-09-06 10:30:00', 'User manual for water bath', 9, 9),
+('pH Meter Calibration', '/attachments/ph_meter_calibration.pdf', 'document', 25600, '2024-10-02 16:00:00', 'Calibration document for pH meter', 10, 10);
+
+
+
+
+INSERT INTO `mydb`.`category` (laboratory_item_id_laboratory_item, title_category, description) VALUES
+(1, 'Optical Instruments', 'Instruments that use optics.'),
+(2, 'Spectrometry', 'Instruments for spectrometry analysis.'),
+(3, 'Liquid Handling', 'Instruments for handling liquids.'),
+(4, 'Separation Techniques', 'Instruments for separating substances.'),
+(5, 'Incubation Equipment', 'Equipment for incubating samples.'),
+(6, 'Safety Equipment', 'Equipment designed for safety.'),
+(7, 'Refrigeration', 'Instruments for cooling substances.'),
+(8, 'Fume Extraction', 'Instruments for fume extraction.'),
+(9, 'Temperature Control', 'Instruments for controlling temperature.'),
+(10, 'Chemical Analysis', 'Instruments for chemical analysis.');
+
+
+
+INSERT INTO `mydb`.`user` (name_user, email, password) VALUES
+('Alice Johnson', 'alice.johnson@example.com', 'password123'),
+('Bob Smith', 'bob.smith@example.com', 'password123'),
+('Charlie Brown', 'charlie.brown@example.com', 'password123'),
+('Diana Prince', 'diana.prince@example.com', 'password123'),
+('Edward Elric', 'edward.elric@example.com', 'password123'),
+('Fiona Gallagher', 'fiona.gallagher@example.com', 'password123'),
+('George Michael', 'george.michael@example.com', 'password123'),
+('Hannah Baker', 'hannah.baker@example.com', 'password123'),
+('Ivy League', 'ivy.league@example.com', 'password123'),
+('Jack Daniels', 'jack.daniels@example.com', 'password123');
+
+
+
+INSERT INTO `mydb`.`user_loan` (name, email, rna, empresa, cracha, telefone) VALUES
+('Alice Johnson', 'alice.johnson@example.com', 'RNA001', 'Company A', 'C001', '1234567890'),
+('Bob Smith', 'bob.smith@example.com', 'RNA002', 'Company B', 'C002', '2345678901'),
+('Charlie Brown', 'charlie.brown@example.com', 'RNA003', 'Company C', 'C003', '3456789012'),
+('Diana Prince', 'diana.prince@example.com', 'RNA004', 'Company D', 'C004', '4567890123
