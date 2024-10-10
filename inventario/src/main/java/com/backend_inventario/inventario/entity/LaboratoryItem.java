@@ -1,6 +1,7 @@
 package com.backend_inventario.inventario.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.backend_inventario.inventario.entity.Enum.Status;
 
@@ -9,8 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -46,17 +46,21 @@ public class LaboratoryItem {
     @Column(name = "Status", nullable = false)
     private Status status;
 
-    @ManyToOne
-    @JoinColumn(name = "maintenance_id_maintenance")
-    private Maintenance associatedMaintenance;
+    @OneToMany
+    private List <Maintenance> maintenances;
+
+    @OneToMany
+    private List <Attachment> attachments;
+
 
     
     public LaboratoryItem() {
     }
 
+   
     public LaboratoryItem(Long idLaboratoryItemHeritage, String nameItem, String brand, String model,
             String serialNumber, String invoiceNumber, LocalDate entryDate, LocalDate nextCalibration, Status status,
-            Maintenance associatedMaintenance) {
+            List<Maintenance> maintenances) {
         this.idLaboratoryItemHeritage = idLaboratoryItemHeritage;
         this.nameItem = nameItem;
         this.brand = brand;
@@ -66,8 +70,9 @@ public class LaboratoryItem {
         this.entryDate = entryDate;
         this.nextCalibration = nextCalibration;
         this.status = status;
-        this.associatedMaintenance = associatedMaintenance;
+        this.maintenances = maintenances;
     }
+
 
     public Long getIdLaboratoryItemHeritage() {
         return idLaboratoryItemHeritage;
@@ -141,12 +146,12 @@ public class LaboratoryItem {
         this.status = status;
     }
 
-    public Maintenance getAssociatedMaintenance() {
-        return associatedMaintenance;
+    public List<Attachment> getAttachments() {
+        return attachments;
     }
 
-    public void setAssociatedMaintenance(Maintenance associatedMaintenance) {
-        this.associatedMaintenance = associatedMaintenance;
+    public List<Maintenance> getMaintenances() {
+        return maintenances;
     }
 
     @Override
@@ -173,7 +178,6 @@ public class LaboratoryItem {
             return false;
         return true;
     }
-
-    
+ 
 
 }
