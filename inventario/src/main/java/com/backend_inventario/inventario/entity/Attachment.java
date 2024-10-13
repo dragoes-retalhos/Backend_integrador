@@ -2,6 +2,8 @@ package com.backend_inventario.inventario.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,10 +44,12 @@ public class Attachment {
 
     @ManyToOne
     @JoinColumn(name = "laboratory_item_id_laboratory_item_heritage", nullable = true)
-    private LaboratoryItem LaboratoryItem;
+    @JsonBackReference
+    private LaboratoryItem laboratoryItem;
 
     @ManyToOne
     @JoinColumn(name = "maintenance_id_maintenance", nullable = true) 
+    @JsonBackReference
     private Maintenance maintenance;
 
     public Attachment() {
@@ -54,7 +58,7 @@ public class Attachment {
 
     public Attachment(Long id, String nameAttachment, String pathAttachment, String typeAttachment,
             Long sizeAttachment, LocalDateTime creationDate, String description,
-            LaboratoryItem LaboratoryItem) {
+            LaboratoryItem laboratoryItem) {
         this.id = id;
         this.nameAttachment = nameAttachment;
         this.pathAttachment = pathAttachment;
@@ -62,7 +66,7 @@ public class Attachment {
         this.sizeAttachment = sizeAttachment;
         this.creationDate = creationDate;
         this.description = description;
-        this.LaboratoryItem = LaboratoryItem;
+        this.laboratoryItem = laboratoryItem;
     }
 
     public Long getId_attachment() {
@@ -121,20 +125,14 @@ public class Attachment {
         this.description = description;
     }
 
-    public LaboratoryItem getAssociatedLaboratoryItem() {
-        return LaboratoryItem;
-    }
-
-    public void setAssociatedLaboratoryItem(LaboratoryItem LaboratoryItem) {
-        this.LaboratoryItem = LaboratoryItem;
-    }
+  
 
     public LaboratoryItem getLaboratoryItem() {
-        return LaboratoryItem;
+        return laboratoryItem;
     }
 
     public void setLaboratoryItem(LaboratoryItem laboratoryItem) {
-        LaboratoryItem = laboratoryItem;
+        this.laboratoryItem = laboratoryItem;
     }
 
     public Maintenance getMaintenance() {

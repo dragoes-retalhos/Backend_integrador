@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -46,10 +48,11 @@ public class Maintenance {
 
     @ManyToOne
     @JoinColumn(name = "laboratory_item_id_laboratory_item_heritage", nullable = false) 
+    @JsonBackReference
     @NotNull
     private LaboratoryItem laboratoryItem;
 
-    @OneToMany
+    @OneToMany(mappedBy = "maintenance")
     private List<Attachment> attachments;
 
     public Maintenance() {

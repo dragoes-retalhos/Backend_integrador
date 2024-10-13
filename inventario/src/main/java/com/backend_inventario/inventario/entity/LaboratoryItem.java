@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.backend_inventario.inventario.entity.Enum.Status;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,10 +47,12 @@ public class LaboratoryItem {
     @Column(name = "Status", nullable = false)
     private Status status;
 
-    @OneToMany
+    @OneToMany(mappedBy = "laboratoryItem")
+    @JsonManagedReference
     private List <Maintenance> maintenances;
 
-    @OneToMany
+    @OneToMany(mappedBy = "laboratoryItem")
+    @JsonManagedReference
     private List <Attachment> attachments;
 
 
