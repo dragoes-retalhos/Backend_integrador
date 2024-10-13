@@ -3,6 +3,7 @@ package com.backend_inventario.inventario.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,17 @@ public class LaboratoryItemService {
         return laboratoryItemRepository.findByNameItem(nameItem).stream()
                 .distinct() // Filtra duplicatas
                 .collect(Collectors.toList());
+    }
+
+
+    public LaboratoryItem getItemByid(Long id){
+        
+        if(!laboratoryItemRepository.existsById(id)){
+            throw new RuntimeException("Item não encontrado");
+        }
+
+        Optional <LaboratoryItem> laboratoryItemOptional = laboratoryItemRepository.findById(id);
+        return laboratoryItemOptional.orElse(null);
     }
 
 }

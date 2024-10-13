@@ -42,11 +42,17 @@ public class LaboratoryItemController {
 
     }
 
-    
-    @GetMapping("/{nameItem}")
+    @GetMapping("/by-name/{nameItem}")
     public ResponseEntity<Object> getItemsByName(@PathVariable String nameItem){
 
-        System.out.println(nameItem);
+        if (nameItem == null || nameItem.isEmpty()) {
+            ApiErrorResponse errorResponse = new ApiErrorResponse(
+                    HttpStatus.BAD_REQUEST.value(),
+                    "Bad Request",
+                    "O nome do item não pode ser nulo ou vazio.",
+                    "/api/item/" + nameItem);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
 
         try {
             List <LaboratoryItem> items = laboratoryItemService.getItemsByName(nameItem);
@@ -69,4 +75,43 @@ public class LaboratoryItemController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getItemById(@PathVariable Long id){
+        
+        if (id == null || id.isEmpty()) {
+            ApiErrorResponse errorResponse = new ApiErrorResponse(
+                    HttpStatus.BAD_REQUEST.value(),
+                    "Bad Request",
+                    "O id do item não pode ser nulo ou vazio.",
+                    "/api/item/" + id);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
+
+       
+       
+        try {
+            LaboratoryItem laboratoryItem = laboratoryItemService.getItemByid(id);
+            return ResponseEntity.ok(laboratoryItem);
+        } catch (RuntimeException e) {
+            ApiErrorResponse errorResponse = new ApiErrorResponse(
+                    HttpStatus.NOT_FOUND.value(),
+                    "Not Found",
+                    e.getMessage(),
+                    "/api/item/" + id);
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+
+        } catch (Exception e) {
+            ApiErrorResponse errorResponse = new ApiErrorResponse(
+                    HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                    "Internal Server Error",
+                    "Erro ao buscar o iten",
+                    "/api/item/" + id);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
+
+
 }    
