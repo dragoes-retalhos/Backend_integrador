@@ -24,6 +24,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`laboratory_item` (
   `id_laboratory_item_heritage` INT(11) NOT NULL AUTO_INCREMENT,
   `name_item` VARCHAR(250) NOT NULL,
   `brand` VARCHAR(250) NULL DEFAULT NULL,
+  `description` VARCHAR(500) NULL DEFAULT NULL,
+  `status` INT NULL DEFAULT NULL,
   `model` VARCHAR(250) NULL DEFAULT NULL,
   `serial_number` VARCHAR(250) NULL DEFAULT NULL,
   `invoice_number` VARCHAR(100) NULL DEFAULT NULL,
@@ -192,9 +194,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`location` (
 ENGINE = InnoDB;
 
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 INSERT INTO `mydb`.`laboratory_item` (name_item, brand, model, serial_number, invoice_number, entry_date, next_calibration) VALUES
@@ -272,4 +271,25 @@ INSERT INTO `mydb`.`user_loan` (name, email, rna, empresa, cracha, telefone) VAL
 ('Alice Johnson', 'alice.johnson@example.com', 'RNA001', 'Company A', 'C001', '1234567890'),
 ('Bob Smith', 'bob.smith@example.com', 'RNA002', 'Company B', 'C002', '2345678901'),
 ('Charlie Brown', 'charlie.brown@example.com', 'RNA003', 'Company C', 'C003', '3456789012'),
-('Diana Prince', 'diana.prince@example.com', 'RNA004', 'Company D', 'C004', '4567890123
+('Diana Prince', 'diana.prince@example.com', 'RNA004', 'Company D', 'C004', '4567890123');
+
+
+-- =============================================
+-- Views
+-- =============================================
+
+CREATE VIEW list_items AS
+SELECT name_item, description, COUNT(*) AS amount
+FROM laboratory_item
+GROUP BY name_item, description;
+
+
+
+-- =============================================
+-- Procedures
+-- =============================================
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
