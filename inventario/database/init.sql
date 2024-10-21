@@ -212,15 +212,15 @@ INSERT INTO `mydb`.`laboratory_item` (name_item, brand, model, serial_number, in
 
 INSERT INTO `mydb`.`maintenance` (maintenance_type, description, status, cost, creation_date, delivery_date, laboratory_item_id_laboratory_item_heritage) VALUES
 (1, 'Routine checkup', 1, 150.00, '2024-01-20 10:00:00', '2024-01-22', 1),
-(2, 'Calibration required', 1, 200.00, '2024-02-25 11:00:00', '2024-02-27', 2),
+(1, 'Calibration required', 1, 200.00, '2024-02-25 11:00:00', '2024-02-27', 2),
 (1, 'Part replacement', 2, 300.00, '2024-03-30 12:00:00', '2024-04-01', 3),
-(3, 'Software update', 1, 100.00, '2024-04-05 09:00:00', '2024-04-06', 4),
-(2, 'Cleaning and service', 1, 250.00, '2024-05-10 14:00:00', '2024-05-12', 5),
+(0, 'Software update', 1, 100.00, '2024-04-05 09:00:00', '2024-04-06', 4),
+(1, 'Cleaning and service', 1, 250.00, '2024-05-10 14:00:00', '2024-05-12', 5),
 (1, 'Calibration and check', 1, 175.00, '2024-06-15 08:00:00', '2024-06-16', 6),
-(2, 'Repair needed', 3, 400.00, '2024-07-20 13:00:00', '2024-07-22', 7),
-(3, 'Replacement of filters', 1, 120.00, '2024-08-25 15:00:00', '2024-08-26', 8),
+(1, 'Repair needed', 0, 400.00, '2024-07-20 13:00:00', '2024-07-22', 7),
+(0, 'Replacement of filters', 1, 120.00, '2024-08-25 15:00:00', '2024-08-26', 8),
 (1, 'Annual service', 1, 350.00, '2024-09-15 10:30:00', '2024-09-18', 9),
-(2, 'General maintenance', 1, 200.00, '2024-10-01 16:00:00', '2024-10-03', 10);
+(0, 'General maintenance', 1, 200.00, '2024-10-01 16:00:00', '2024-10-03', 10);
 
 
 
@@ -288,6 +288,70 @@ GROUP BY name_item, description;
 -- =============================================
 -- Procedures
 -- =============================================
+
+
+DELIMITER $$
+
+-- Trigger para atualizar a data de empréstimo automaticamente na inserção
+CREATE TRIGGER before_insert_loan
+BEFORE INSERT ON loan
+FOR EACH ROW
+BEGIN
+    SET NEW.loan_date = NOW(); -- Define a data atual como a data de empréstimo
+END$$
+
+-- Trigger para atualizar a data de retorno automaticamente na atualização
+CREATE TRIGGER before_update_loan
+BEFORE UPDATE ON loan
+FOR EACH ROW
+BEGIN
+    -- Se o status indicar que o item foi devolvido, atualiza a data de retorno
+    IF NEW.status = 3 THEN  -- Status 1 pode representar "devolvido" (ajuste conforme seu sistema)
+        SET NEW.return_date = NOW();
+    END IF;
+END$$
+
+-- Trigger para atualizar a data de criação de arquivo automaticamente
+CREATE TRIGGER before_insert_attachment
+BEFORE INSERT ON attachment
+FOR EACH ROW
+BEGIN
+	SET NEW.creation_date = NOW();
+END$$
+
+-- Trigger para atualizar data de inicio da manutenção
+CREATE TRIGGER before_insert_maintenance
+BEFORE INSERT ON maintenance
+FOR EACH ROW
+BEGIN
+	SET NEW.creation_date = NOW();
+END$$
+
+-- Trigger para atualizar data de finalização manutenção
+CREATE TRIGGER before_update_maintenance
+BEFORE UPDATE ON maintenance
+FOR EACH ROW
+BEGIN
+	IF NEW.status = 1 THEN
+		SET NEW.delivery_date = NOW();
+	END IF;
+END$$
+DELIMITER ;
+
+
+DELIMITER $$
+
+-- Trigger para atualizar a data de cadastro automaticamente na inserção
+CREATE TRIGGER before_insert_laboratory_item
+BEFORE INSERT ON laboratory_item
+FOR EACH ROW
+BEGIN
+    SET NEW.entry_date = NOW(); -- Define a data atual como a data de cadastro
+END$$
+
+DELIMITER ;
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
