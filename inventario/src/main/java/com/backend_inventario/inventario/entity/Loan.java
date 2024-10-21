@@ -1,7 +1,7 @@
 package com.backend_inventario.inventario.entity;
 
 import java.time.LocalDateTime;
-import com.backend_inventario.inventario.entity.Enum.Status;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,9 +25,9 @@ public class Loan {
 
     @Column(name = "return_date", nullable = true)
     private LocalDateTime returnDate;
-
+    /* 
     @Column(name = "status")
-    private Status status;
+    private Status status; */
 
     @ManyToOne
     @JoinColumn(name = "user_id_user", nullable = false)
@@ -40,12 +40,11 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(long id, LocalDateTime loanDate, LocalDateTime returnDate, Status status, User associatedUser,
+    public Loan(long id, LocalDateTime loanDate, LocalDateTime returnDate, User associatedUser,
             UserLoan associatedUserLoan) {
         this.id = id;
         this.loanDate = loanDate;
         this.returnDate = returnDate;
-        this.status = status;
         this.associatedUser = associatedUser;
         this.associatedUserLoan = associatedUserLoan;
     }
@@ -74,13 +73,7 @@ public class Loan {
         this.returnDate = returnDate;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
+   
 
     public User getAssociatedUser() {
         return associatedUser;

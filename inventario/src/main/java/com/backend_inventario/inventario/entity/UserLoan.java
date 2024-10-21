@@ -1,7 +1,5 @@
 package com.backend_inventario.inventario.entity;
 
-import com.backend_inventario.inventario.entity.Enum.Status;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,10 +35,10 @@ public class UserLoan {
     
     @Column(name = "phone", unique = true, nullable = false)
     private String phone;
-
+    /* 
     @Column(name = "Status")
     private Status status;
-
+*/
     public long getId() {
         return id;
     }
@@ -97,20 +95,13 @@ public class UserLoan {
         this.phone = phone;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
+   
     public UserLoan() {
         
     }
 
     public UserLoan(long id, String name, String email, String rna, String enterprise, String identification,
-            String phone, Status status) {
+            String phone) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -118,7 +109,7 @@ public class UserLoan {
         this.enterprise = enterprise;
         this.identification = identification;
         this.phone = phone;
-        this.status = status;
+       
     }
 
     @Override

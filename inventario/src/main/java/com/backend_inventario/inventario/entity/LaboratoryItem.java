@@ -3,15 +3,19 @@ package com.backend_inventario.inventario.entity;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.backend_inventario.inventario.entity.Enum.Status;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.backend_inventario.inventario.entity.Enum.StatusItemEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,11 +25,11 @@ public class LaboratoryItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_laboratory_item_heritage", nullable = false)
-    private Long idLaboratoryItemHeritage;
+    private Long id;
 
     @Column(name = "name_item", nullable = false)
     private String nameItem;
-
+    
     @Column(name = "brand", nullable = true)
     private String brand;
 
@@ -45,26 +49,29 @@ public class LaboratoryItem {
     private LocalDate  nextCalibration;
 
     @Column(name = "Status", nullable = false)
-    private Status status;
+    @Enumerated(EnumType.ORDINAL)
+    private StatusItemEnum status;
 
     @OneToMany(mappedBy = "laboratoryItem")
-    @JsonManagedReference
+    @JsonIgnore
     private List <Maintenance> maintenances;
 
-    @OneToMany(mappedBy = "laboratoryItem")
-    @JsonManagedReference
-    private List <Attachment> attachments;
-
+    @OneToMany(mappedBy = "laboratoryItem", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Attachment> attachments;
 
     
     public LaboratoryItem() {
     }
 
    
-    public LaboratoryItem(Long idLaboratoryItemHeritage, String nameItem, String brand, String model,
-            String serialNumber, String invoiceNumber, LocalDate entryDate, LocalDate nextCalibration, Status status,
-            List<Maintenance> maintenances) {
-        this.idLaboratoryItemHeritage = idLaboratoryItemHeritage;
+   
+
+
+    public LaboratoryItem(Long id, String nameItem, String brand, String model, String serialNumber,
+            String invoiceNumber, LocalDate entryDate, LocalDate nextCalibration, StatusItemEnum status,
+            List<Maintenance> maintenances, List<Attachment> attachments) {
+        this.id = id;
         this.nameItem = nameItem;
         this.brand = brand;
         this.model = model;
@@ -74,15 +81,27 @@ public class LaboratoryItem {
         this.nextCalibration = nextCalibration;
         this.status = status;
         this.maintenances = maintenances;
+        this.attachments = attachments;
     }
 
 
-    public Long getIdLaboratoryItemHeritage() {
-        return idLaboratoryItemHeritage;
+
+
+
+    @PrePersist // METODO BACANA PARA DEFINIR VALOR INICIAL PARA STATUS
+    protected void onCreate() {
+        if (status == null) {
+            status = StatusItemEnum.ACTIVE;
+        }
     }
 
-    public void setIdLaboratoryItemHeritage(Long idLaboratoryItemHeritage) {
-        this.idLaboratoryItemHeritage = idLaboratoryItemHeritage;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNameItem() {
@@ -141,11 +160,11 @@ public class LaboratoryItem {
         this.nextCalibration = nextCalibration;
     }
 
-    public Status getStatus() {
+    public StatusItemEnum getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(StatusItemEnum status) {
         this.status = status;
     }
 
@@ -153,15 +172,18 @@ public class LaboratoryItem {
         return attachments;
     }
 
+    
     public List<Maintenance> getMaintenances() {
         return maintenances;
     }
+ 
+    
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((idLaboratoryItemHeritage == null) ? 0 : idLaboratoryItemHeritage.hashCode());
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
     }
 
@@ -174,13 +196,18 @@ public class LaboratoryItem {
         if (getClass() != obj.getClass())
             return false;
         LaboratoryItem other = (LaboratoryItem) obj;
-        if (idLaboratoryItemHeritage == null) {
-            if (other.idLaboratoryItemHeritage != null)
+        if (id == null) {
+            if (other.id != null)
                 return false;
-        } else if (!idLaboratoryItemHeritage.equals(other.idLaboratoryItemHeritage))
+        } else if (!id.equals(other.id))
             return false;
         return true;
     }
- 
+
+
+
+
+
+  
 
 }

@@ -2,7 +2,7 @@ package com.backend_inventario.inventario.entity;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
@@ -44,12 +44,12 @@ public class Attachment {
 
     @ManyToOne
     @JoinColumn(name = "laboratory_item_id_laboratory_item_heritage", nullable = true)
-    @JsonBackReference
+    @JsonIgnore
     private LaboratoryItem laboratoryItem;
 
     @ManyToOne
     @JoinColumn(name = "maintenance_id_maintenance", nullable = true) 
-    @JsonBackReference
+    @JsonIgnore
     private Maintenance maintenance;
 
     public Attachment() {

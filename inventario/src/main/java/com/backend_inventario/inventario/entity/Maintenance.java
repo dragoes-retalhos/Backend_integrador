@@ -5,11 +5,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.backend_inventario.inventario.entity.Enum.MainetenceTypeEnum;
+import com.backend_inventario.inventario.entity.Enum.StatusMaintenanceEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,13 +33,15 @@ public class Maintenance {
     private Long id;
 
     @Column(name = "maintenance_type", nullable = true)
-    private Integer maintenanceType;
+    @Enumerated(EnumType.ORDINAL)
+    private MainetenceTypeEnum maintenanceType;
 
     @Column(name = "description", length = 1000, nullable = true)
     private String description;
 
     @Column(name = "status", nullable = true)
-    private Integer status;
+    @Enumerated(EnumType.ORDINAL)
+    private StatusMaintenanceEnum statusMaintenance;
 
     @Column(name = "cost", precision = 10, scale = 2)
     private BigDecimal cost;
@@ -49,25 +54,24 @@ public class Maintenance {
 
     @ManyToOne
     @JoinColumn(name = "laboratory_item_id_laboratory_item_heritage", nullable = false) 
-    @JsonBackReference
     @NotNull
     private LaboratoryItem laboratoryItem;
 
     @OneToMany(mappedBy = "maintenance")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Attachment> attachments;
 
     public Maintenance() {
 
     }
 
-    public Maintenance(@NotNull Long id, Integer maintenanceType, String description, Integer status, BigDecimal cost,
+    public Maintenance(@NotNull Long id, MainetenceTypeEnum maintenanceType, String description, StatusMaintenanceEnum statusMaintenance, BigDecimal cost,
             LocalDateTime creationDate, LocalDate deliveryDate, @NotNull LaboratoryItem laboratoryItem,
             List<Attachment> attachments) {
         this.id = id;
         this.maintenanceType = maintenanceType;
         this.description = description;
-        this.status = status;
+        this.statusMaintenance = statusMaintenance;
         this.cost = cost;
         this.creationDate = creationDate;
         this.deliveryDate = deliveryDate;
@@ -83,11 +87,11 @@ public class Maintenance {
         this.id = id;
     }
 
-    public Integer getMaintenanceType() {
+    public MainetenceTypeEnum getMaintenanceType() {
         return maintenanceType;
     }
 
-    public void setMaintenanceType(Integer maintenanceType) {
+    public void setMaintenanceType(MainetenceTypeEnum maintenanceType) {
         this.maintenanceType = maintenanceType;
     }
 
@@ -99,12 +103,15 @@ public class Maintenance {
         this.description = description;
     }
 
-    public Integer getStatus() {
-        return status;
+   
+    public void setStatus(StatusMaintenanceEnum statusMaintenance) {
+        this.statusMaintenance = statusMaintenance;
     }
+    
 
-    public void setStatus(Integer status) {
-        this.status = status;
+   
+    public StatusMaintenanceEnum getStatusMaintenance() {
+        return statusMaintenance;
     }
 
     public BigDecimal getCost() {
