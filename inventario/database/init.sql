@@ -332,7 +332,7 @@ CREATE TRIGGER before_update_maintenance
 BEFORE UPDATE ON maintenance
 FOR EACH ROW
 BEGIN
-	IF NEW.status = 1 THEN
+	IF NEW.status = 2 THEN
 		SET NEW.delivery_date = NOW();
 	END IF;
 END$$
