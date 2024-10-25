@@ -8,11 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend_inventario.inventario.entity.Maintenance;
+import com.backend_inventario.inventario.entity.dto.MaintenanceDTO;
 import com.backend_inventario.inventario.service.MaintenanceService;
 import com.backend_inventario.inventario.util.ApiErrorResponse;
 
@@ -76,6 +78,13 @@ public class MaintenanceController {
         }
     }
 
-    
+    @PutMapping("/up-date/{id}")
+    public ResponseEntity<Maintenance> updateMaintenance(
+            @PathVariable Long id,
+            @RequestBody MaintenanceDTO maintenanceDTO) {
+        
+        Maintenance updatedMaintenance = maintenanceService.updateMaintenance(id, maintenanceDTO);
+        return ResponseEntity.ok(updatedMaintenance);
+    }
 
 }
