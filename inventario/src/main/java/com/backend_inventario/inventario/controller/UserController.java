@@ -146,7 +146,7 @@ public class UserController {
 
         try {
 
-            userService.deletUser(id);
+            userService.deleteUser(id);
             return ResponseEntity.noContent().build();
 
         } catch (RuntimeException e) {

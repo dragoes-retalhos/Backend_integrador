@@ -76,7 +76,7 @@ public class LaboratoryItemController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> getItemById(@PathVariable Long id) {
         try {
-            LaboratoryItem laboratoryItem = laboratoryItemService.getItemByid(id);
+            LaboratoryItem laboratoryItem = laboratoryItemService.getItemById(id);
             return ResponseEntity.ok(laboratoryItem);
         } catch (RuntimeException e) {
             ApiErrorResponse errorResponse = new ApiErrorResponse(
@@ -98,7 +98,7 @@ public class LaboratoryItemController {
     @PostMapping
     public ResponseEntity<Object> createItem(@RequestBody LaboratoryItem laboratoryItem) {
         try {
-            LaboratoryItem newLaboratoryItem = laboratoryItemService.createdItem(laboratoryItem);
+            LaboratoryItem newLaboratoryItem = laboratoryItemService.createItem(laboratoryItem);
             return ResponseEntity.status(HttpStatus.CREATED).body(newLaboratoryItem);
         } catch (Exception e) {
             ApiErrorResponse errorResponse = new ApiErrorResponse(
