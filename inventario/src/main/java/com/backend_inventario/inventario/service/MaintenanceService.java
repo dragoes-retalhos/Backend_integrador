@@ -25,4 +25,12 @@ public class MaintenanceService {
 
         return maintenanceRepository.findByLaboratoryItemId(laboratoryItemId);
     }
+
+
+    public Maintenance createMaintenance(Maintenance maintenance){
+        if(!laboratoryItemRepository.existsById(maintenance.getLaboratoryItem().getId())){
+            throw new RuntimeException("Item nao encontrado");
+        }
+        return maintenanceRepository.save(maintenance);
+    }
 }

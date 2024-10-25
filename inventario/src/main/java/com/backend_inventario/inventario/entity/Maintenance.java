@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.backend_inventario.inventario.entity.Enum.MainetenceTypeEnum;
+import com.backend_inventario.inventario.entity.Enum.MaintenanceTypeEnum;
 import com.backend_inventario.inventario.entity.Enum.StatusMaintenanceEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,12 +29,11 @@ public class Maintenance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_maintenance", nullable = false)
-    @NotNull
     private Long id;
 
     @Column(name = "maintenance_type", nullable = true)
     @Enumerated(EnumType.ORDINAL)
-    private MainetenceTypeEnum maintenanceType;
+    private MaintenanceTypeEnum maintenanceType;
 
     @Column(name = "description", length = 1000, nullable = true)
     private String description;
@@ -53,7 +52,7 @@ public class Maintenance {
     private LocalDate deliveryDate;
 
     @ManyToOne
-    @JoinColumn(name = "laboratory_item_id_laboratory_item_heritage", nullable = false) 
+    @JoinColumn(name = "laboratory_item_id_laboratory_item_heritage", nullable = false)
     @NotNull
     private LaboratoryItem laboratoryItem;
 
@@ -62,12 +61,10 @@ public class Maintenance {
     private List<Attachment> attachments;
 
     public Maintenance() {
-
     }
 
-    public Maintenance(@NotNull Long id, MainetenceTypeEnum maintenanceType, String description, StatusMaintenanceEnum statusMaintenance, BigDecimal cost,
-            LocalDateTime creationDate, LocalDate deliveryDate, @NotNull LaboratoryItem laboratoryItem,
-            List<Attachment> attachments) {
+    public Maintenance(Long id, MaintenanceTypeEnum maintenanceType, String description, StatusMaintenanceEnum statusMaintenance, BigDecimal cost,
+            LocalDateTime creationDate, LocalDate deliveryDate, LaboratoryItem laboratoryItem, List<Attachment> attachments) {
         this.id = id;
         this.maintenanceType = maintenanceType;
         this.description = description;
@@ -87,11 +84,11 @@ public class Maintenance {
         this.id = id;
     }
 
-    public MainetenceTypeEnum getMaintenanceType() {
+    public MaintenanceTypeEnum getMaintenanceType() {
         return maintenanceType;
     }
 
-    public void setMaintenanceType(MainetenceTypeEnum maintenanceType) {
+    public void setMaintenanceType(MaintenanceTypeEnum maintenanceType) {
         this.maintenanceType = maintenanceType;
     }
 
@@ -103,15 +100,12 @@ public class Maintenance {
         this.description = description;
     }
 
-   
-    public void setStatus(StatusMaintenanceEnum statusMaintenance) {
-        this.statusMaintenance = statusMaintenance;
-    }
-    
-
-   
     public StatusMaintenanceEnum getStatusMaintenance() {
         return statusMaintenance;
+    }
+
+    public void setStatusMaintenance(StatusMaintenanceEnum statusMaintenance) {
+        this.statusMaintenance = statusMaintenance;
     }
 
     public BigDecimal getCost() {
@@ -138,12 +132,12 @@ public class Maintenance {
         this.deliveryDate = deliveryDate;
     }
 
-    public void setLaboratoryItem(LaboratoryItem laboratoryItem) {
-        this.laboratoryItem = laboratoryItem;
-    }
-
     public LaboratoryItem getLaboratoryItem() {
         return laboratoryItem;
+    }
+
+    public void setLaboratoryItem(LaboratoryItem laboratoryItem) {
+        this.laboratoryItem = laboratoryItem;
     }
 
     public List<Attachment> getAttachments() {
@@ -174,5 +168,5 @@ public class Maintenance {
             return false;
         return true;
     }
-
 }
+
