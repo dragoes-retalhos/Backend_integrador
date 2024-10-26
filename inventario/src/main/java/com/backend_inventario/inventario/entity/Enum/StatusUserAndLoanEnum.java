@@ -1,13 +1,13 @@
 package com.backend_inventario.inventario.entity.Enum;
 
-public enum StatusUserEnum {
+public enum StatusUserAndLoanEnum {
     
     ACTIVE("ATIVO"),
     DISABLED("DESATIVADO");
 
     private final String descricaoPortugues;
 
-    StatusUserEnum(String descricaoPortugues) {
+    StatusUserAndLoanEnum(String descricaoPortugues) {
         this.descricaoPortugues = descricaoPortugues;
     }
 

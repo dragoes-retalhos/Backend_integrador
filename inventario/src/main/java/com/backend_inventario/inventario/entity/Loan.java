@@ -2,14 +2,19 @@ package com.backend_inventario.inventario.entity;
 
 import java.time.LocalDateTime;
 
+import com.backend_inventario.inventario.entity.Enum.StatusUserAndLoanEnum;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,15 +22,19 @@ import jakarta.persistence.Table;
 public class Loan {
 
     @Id
-    @Column(name = "id_loan")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_loan")
     private long id; 
 
     @Column(name = "loan_date", nullable = false)
     private LocalDateTime loanDate;
 
-    @Column(name = "return_date", nullable = true)
+    @Column(name = "return_date")
     private LocalDateTime returnDate;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status")
+    private StatusUserAndLoanEnum status;
 
     @ManyToOne
     @JoinColumn(name = "user_id_user", nullable = false) 
@@ -36,21 +45,26 @@ public class Loan {
     private UserLoan userLoan;
 
 
-    public Loan() {
-    }
+    public Loan() {}
 
-   
-
-    public Loan(long id, LocalDateTime loanDate, LocalDateTime returnDate, User user, UserLoan userLoan) {
+    public Loan(long id, LocalDateTime loanDate, LocalDateTime returnDate, StatusUserAndLoanEnum status, User user, UserLoan userLoan) {
         this.id = id;
         this.loanDate = loanDate;
         this.returnDate = returnDate;
+        this.status = status;
         this.user = user;
         this.userLoan = userLoan;
     }
 
+    
+    @PrePersist
+    protected void onCreate() {
+        if (status == null) {
+            status = StatusUserAndLoanEnum.ACTIVE;
+        }
+    }
 
-
+    
     public long getId() {
         return id;
     }
@@ -75,6 +89,22 @@ public class Loan {
         this.returnDate = returnDate;
     }
 
+    public StatusUserAndLoanEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusUserAndLoanEnum status) {
+        this.status = status;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public UserLoan getUserLoan() {
         return userLoan;
     }
@@ -83,18 +113,7 @@ public class Loan {
         this.userLoan = userLoan;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
- 
-
+    // Métodos de igualdade e hash
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -105,19 +124,9 @@ public class Loan {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
         Loan other = (Loan) obj;
-        if (id != other.id)
-            return false;
-        return true;
+        return id == other.id;
     }
-
-
-
-    
 }

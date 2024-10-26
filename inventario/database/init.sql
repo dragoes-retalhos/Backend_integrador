@@ -123,17 +123,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`user_loan` (
   `name` VARCHAR(200) NULL DEFAULT NULL,
   `email` VARCHAR(100) NULL DEFAULT NULL,
   `rna` VARCHAR(10) NULL DEFAULT NULL,
-  `empresa` VARCHAR(200) NULL DEFAULT NULL,
-  `cracha` VARCHAR(20) NULL DEFAULT NULL,
-  `telefone` VARCHAR(20) NULL DEFAULT NULL,
-  `status` INT NULL DEFAULT NULL,
-  `type_user` INT NULL DEFAULT NULL,
+  `enterprise` VARCHAR(200) NULL DEFAULT NULL,
+  `identification` VARCHAR(20) NULL DEFAULT NULL,
+  `phone` VARCHAR(20) NULL DEFAULT NULL,
+  `status` INT NULL DEFAULT NULL,  -- Mantendo como INT
+  `type_user` INT NULL DEFAULT NULL,  -- Mantendo como INT
   PRIMARY KEY (`iduser_loan`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
-  UNIQUE INDEX `rna_UNIQUE` (`rna` ASC) VISIBLE,
-  UNIQUE INDEX `telefone_UNIQUE` (`telefone` ASC) VISIBLE,
-  UNIQUE INDEX `cracha_UNIQUE` (`cracha` ASC) VISIBLE)
-ENGINE = InnoDB;
+  UNIQUE INDEX `rna_UNIQUE` (`rna` ASC) VISIBLE
+) ENGINE = InnoDB;
+
 
 
 -- -----------------------------------------------------
@@ -269,7 +268,7 @@ INSERT INTO `mydb`.`user` (name_user, email, password) VALUES
 
 
 
-INSERT INTO `mydb`.`user_loan` (name, email, rna, empresa, cracha, telefone) VALUES
+INSERT INTO `mydb`.`user_loan` (name, email, rna, enterprise, identification, phone) VALUES
 ('Alice Johnson', 'alice.johnson@example.com', 'RNA001', 'Company A', 'C001', '1234567890'),
 ('Bob Smith', 'bob.smith@example.com', 'RNA002', 'Company B', 'C002', '2345678901'),
 ('Charlie Brown', 'charlie.brown@example.com', 'RNA003', 'Company C', 'C003', '3456789012'),
