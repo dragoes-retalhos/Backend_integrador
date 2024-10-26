@@ -1,7 +1,6 @@
 package com.backend_inventario.inventario.webConfig;
 
 import java.util.List;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -17,15 +16,14 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(@NonNull CorsRegistry registry) {
         
-        registry.addMapping("/**") // Permitir CORS para todas as rotas
-                
-        .allowedOrigins("http://localhost:3000") // Adicione os domínios permitidos
-               
-        .allowedMethods("GET", "POST", "PUT", "DELETE") // Métodos permitidos
-               
-        .allowedHeaders("*") // Permitir todos os cabeçalhos
-                
-        .allowCredentials(true); // Permitir credenciais
+        registry.addMapping("/**") // Permite CORS para todas as rotas
+                .allowedOrigins(
+                    "http://localhost:8080", // Origem para testes com Flutter em um navegador local
+                    "http://10.0.2.2:8080"  // Origem para testes no emulador Android (10.0.2.2 redireciona para localhost)
+                )
+                .allowedMethods("GET", "POST", "PUT", "DELETE") // Métodos permitidos
+                .allowedHeaders("*") // Permitir todos os cabeçalhos
+                .allowCredentials(true); // Permitir credenciais
     }
 
     @Bean
@@ -36,5 +34,4 @@ public class WebConfig implements WebMvcConfigurer {
         ));
         return converter;
     }
-
 }
