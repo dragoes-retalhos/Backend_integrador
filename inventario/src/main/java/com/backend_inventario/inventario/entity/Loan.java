@@ -2,6 +2,7 @@ package com.backend_inventario.inventario.entity;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,29 +26,30 @@ public class Loan {
 
     @Column(name = "return_date", nullable = true)
     private LocalDateTime returnDate;
-    /* 
-    @Column(name = "status")
-    private Status status; */
 
     @ManyToOne
-    @JoinColumn(name = "user_id_user", nullable = false)
-    private User associatedUser;
+    @JoinColumn(name = "user_id_user", nullable = false) 
+    private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "user_loan_iduser_loan", nullable = false)
-    private UserLoan associatedUserLoan;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_loan_iduser_loan", nullable = false) 
+    private UserLoan userLoan;
+
 
     public Loan() {
     }
 
-    public Loan(long id, LocalDateTime loanDate, LocalDateTime returnDate, User associatedUser,
-            UserLoan associatedUserLoan) {
+   
+
+    public Loan(long id, LocalDateTime loanDate, LocalDateTime returnDate, User user, UserLoan userLoan) {
         this.id = id;
         this.loanDate = loanDate;
         this.returnDate = returnDate;
-        this.associatedUser = associatedUser;
-        this.associatedUserLoan = associatedUserLoan;
+        this.user = user;
+        this.userLoan = userLoan;
     }
+
+
 
     public long getId() {
         return id;
@@ -73,23 +75,25 @@ public class Loan {
         this.returnDate = returnDate;
     }
 
-   
-
-    public User getAssociatedUser() {
-        return associatedUser;
+    public UserLoan getUserLoan() {
+        return userLoan;
     }
 
-    public void setAssociatedUser(User associatedUser) {
-        this.associatedUser = associatedUser;
+    public void setUserLoan(UserLoan userLoan) {
+        this.userLoan = userLoan;
     }
 
-    public UserLoan getAssociatedUserLoan() {
-        return associatedUserLoan;
+    public User getUser() {
+        return user;
     }
 
-    public void setAssociatedUserLoan(UserLoan associatedUserLoan) {
-        this.associatedUserLoan = associatedUserLoan;
+
+
+    public void setUser(User user) {
+        this.user = user;
     }
+
+ 
 
     @Override
     public int hashCode() {
@@ -113,6 +117,7 @@ public class Loan {
         return true;
     }
 
-    
 
+
+    
 }

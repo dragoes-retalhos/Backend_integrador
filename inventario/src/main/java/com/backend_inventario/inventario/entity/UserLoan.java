@@ -1,5 +1,8 @@
 package com.backend_inventario.inventario.entity;
 
+import com.backend_inventario.inventario.entity.Enum.StatusUserEnum;
+import com.backend_inventario.inventario.entity.Enum.TypeUserLoanEnum;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,10 +38,13 @@ public class UserLoan {
     
     @Column(name = "phone", unique = true, nullable = false)
     private String phone;
-    /* 
-    @Column(name = "Status")
-    private Status status;
-*/
+   
+    @Column(name = "status")
+    private StatusUserEnum statusUserEnum;
+
+    @Column(name = "type_user")
+    private TypeUserLoanEnum typeUserLoanEnum;
+
     public long getId() {
         return id;
     }
@@ -95,13 +101,32 @@ public class UserLoan {
         this.phone = phone;
     }
 
+    
    
+    public StatusUserEnum getStatusUserEnum() {
+        return statusUserEnum;
+    }
+
+    public void setStatusUserEnum(StatusUserEnum statusUserEnum) {
+        this.statusUserEnum = statusUserEnum;
+    }
+
+    public TypeUserLoanEnum getTypeUserLoanEnum() {
+        return typeUserLoanEnum;
+    }
+
+    public void setTypeUserLoanEnum(TypeUserLoanEnum typeUserLoanEnum) {
+        this.typeUserLoanEnum = typeUserLoanEnum;
+    }
+
     public UserLoan() {
         
     }
 
-    public UserLoan(long id, String name, String email, String rna, String enterprise, String identification,
-            String phone) {
+    
+
+    public UserLoan(@NotNull long id, String name, String email, String rna, String enterprise, String identification,
+            String phone, StatusUserEnum statusUserEnum, TypeUserLoanEnum typeUserLoanEnum) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -109,7 +134,8 @@ public class UserLoan {
         this.enterprise = enterprise;
         this.identification = identification;
         this.phone = phone;
-       
+        this.statusUserEnum = statusUserEnum;
+        this.typeUserLoanEnum = typeUserLoanEnum;
     }
 
     @Override

@@ -205,9 +205,4 @@ public class LaboratoryItem {
     }
 
 
-
-
-
-  
-
 }

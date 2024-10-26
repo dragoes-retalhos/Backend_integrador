@@ -126,6 +126,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`user_loan` (
   `empresa` VARCHAR(200) NULL DEFAULT NULL,
   `cracha` VARCHAR(20) NULL DEFAULT NULL,
   `telefone` VARCHAR(20) NULL DEFAULT NULL,
+  `status` INT NULL DEFAULT NULL,
+  `type_user` INT NULL DEFAULT NULL,
   PRIMARY KEY (`iduser_loan`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
   UNIQUE INDEX `rna_UNIQUE` (`rna` ASC) VISIBLE,
