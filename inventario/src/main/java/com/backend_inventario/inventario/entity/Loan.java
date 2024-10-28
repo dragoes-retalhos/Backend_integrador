@@ -1,8 +1,10 @@
 package com.backend_inventario.inventario.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.backend_inventario.inventario.entity.Enum.StatusUserAndLoanEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -13,6 +15,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -44,19 +48,34 @@ public class Loan {
     @JoinColumn(name = "user_loan_iduser_loan", nullable = false) 
     private UserLoan userLoan;
 
+    @ManyToMany
+    @JoinTable(
+        name = "loan_has_laboratory_item",
+        joinColumns = @JoinColumn(name = "loan_id_loan"),
+        inverseJoinColumns = @JoinColumn(name = "laboratory_item_id_laboratory_item")
+    )
+    private List<LaboratoryItem> laboratoryItems;
+
 
     public Loan() {}
 
-    public Loan(long id, LocalDateTime loanDate, LocalDateTime returnDate, StatusUserAndLoanEnum status, User user, UserLoan userLoan) {
+   
+
+    
+    public Loan(long id, LocalDateTime loanDate, LocalDateTime returnDate, StatusUserAndLoanEnum status, User user,
+            UserLoan userLoan, List<LaboratoryItem> laboratoryItems) {
         this.id = id;
         this.loanDate = loanDate;
         this.returnDate = returnDate;
         this.status = status;
         this.user = user;
         this.userLoan = userLoan;
+        this.laboratoryItems = laboratoryItems;
     }
 
-    
+
+
+
     @PrePersist
     protected void onCreate() {
         if (status == null) {
@@ -113,7 +132,15 @@ public class Loan {
         this.userLoan = userLoan;
     }
 
-    // Métodos de igualdade e hash
+    public List<LaboratoryItem> getLaboratoryItems() {
+        return laboratoryItems;
+    }
+
+    public void setLaboratoryItems(List<LaboratoryItem> laboratoryItems) {
+        this.laboratoryItems = laboratoryItems;
+    }
+
+   
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -129,4 +156,6 @@ public class Loan {
         Loan other = (Loan) obj;
         return id == other.id;
     }
+
+    
 }

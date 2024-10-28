@@ -1,13 +1,17 @@
 package com.backend_inventario.inventario.entity;
 
+import java.util.List;
+
 import com.backend_inventario.inventario.entity.Enum.StatusUserAndLoanEnum;
 import com.backend_inventario.inventario.entity.Enum.TypeUserLoanEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -45,9 +49,15 @@ public class UserLoan {
     @Column(name = "type_user")
     private TypeUserLoanEnum typeUserLoanEnum;
 
-    // Construtores
+    @OneToMany(mappedBy = "userLoan")
+    private List<Loan> loans;
+
+    
     public UserLoan() {}
 
+    public UserLoan(Long id){
+        this.id = id;
+    }
     public UserLoan(@NotNull long id, String name, String email, String rna, String enterprise, String identification,
                     String phone, StatusUserAndLoanEnum statusUserEnum, TypeUserLoanEnum typeUserLoanEnum) {
         this.id = id;
@@ -61,7 +71,7 @@ public class UserLoan {
         this.typeUserLoanEnum = typeUserLoanEnum;
     }
 
-    // Método de ciclo de vida
+
     @PrePersist
     protected void initializeStatus() {
         if (statusUserEnum == null) {
@@ -69,7 +79,7 @@ public class UserLoan {
         }
     }
 
-    // Getters e Setters
+    
     public long getId() {
         return id;
     }
@@ -142,7 +152,15 @@ public class UserLoan {
         this.typeUserLoanEnum = typeUserLoanEnum;
     }
 
-    // Métodos de igualdade e hash
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<Loan> loans) {
+        this.loans = loans;
+    }
+
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -158,4 +176,5 @@ public class UserLoan {
         UserLoan other = (UserLoan) obj;
         return id == other.id;
     }
+
 }
