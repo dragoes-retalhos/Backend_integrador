@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend_inventario.inventario.entity.Loan;
+import com.backend_inventario.inventario.entity.dto.LoanSumaryViewDto;
+import com.backend_inventario.inventario.repository.LoanSumaryViewRepository;
 import com.backend_inventario.inventario.service.LoanService;
 import com.backend_inventario.inventario.util.ApiErrorResponse;
 
@@ -22,6 +24,9 @@ public class LoanController {
 
     @Autowired
     private LoanService loanService;
+
+    @Autowired
+    private LoanSumaryViewRepository loanSumaryViewRepository;
 
     @GetMapping
     public ResponseEntity<Object> getAllLoans() {
@@ -113,4 +118,21 @@ public class LoanController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+
+    @GetMapping("/dinamic")
+    public ResponseEntity<Object> getLoansDinamic() {
+        try {
+            List<LoanSumaryViewDto> loanSumaryViewDto = loanService.getLoansDinamic();
+            return ResponseEntity.ok(loanSumaryViewDto); 
+        } catch (Exception e) {
+            ApiErrorResponse errorResponse = new ApiErrorResponse(
+                    HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                    "Internal Server Error",
+                    "Erro ao buscar o empréstimo",
+                    "/api/loan/dinamic"); 
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
+
 }

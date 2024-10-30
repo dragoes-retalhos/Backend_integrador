@@ -36,6 +36,7 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Loan> loans;
 
     public Long getId() {

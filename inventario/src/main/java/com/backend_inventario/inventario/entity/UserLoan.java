@@ -50,6 +50,7 @@ public class UserLoan {
     private TypeUserLoanEnum typeUserLoanEnum;
 
     @OneToMany(mappedBy = "userLoan")
+    @JsonIgnore
     private List<Loan> loans;
 
     
@@ -58,6 +59,7 @@ public class UserLoan {
     public UserLoan(Long id){
         this.id = id;
     }
+   
     public UserLoan(@NotNull long id, String name, String email, String rna, String enterprise, String identification,
                     String phone, StatusUserAndLoanEnum statusUserEnum, TypeUserLoanEnum typeUserLoanEnum) {
         this.id = id;
@@ -72,6 +74,7 @@ public class UserLoan {
     }
 
 
+
     @PrePersist
     protected void initializeStatus() {
         if (statusUserEnum == null) {
@@ -79,6 +82,7 @@ public class UserLoan {
         }
     }
 
+    
     
     public long getId() {
         return id;
@@ -176,5 +180,6 @@ public class UserLoan {
         UserLoan other = (UserLoan) obj;
         return id == other.id;
     }
+
 
 }
