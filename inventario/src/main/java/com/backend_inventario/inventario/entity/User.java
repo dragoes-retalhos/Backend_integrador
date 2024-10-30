@@ -4,16 +4,11 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
@@ -101,31 +96,6 @@ public class User {
         this.email = email;
         this.password = password;
     }
-    public List<Loan> getLoans() {
-        return loans;
-    }
-
-    public void setLoans(List<Loan> loans) {
-        this.loans = loans;
-    }
-
-
-   
-
-    public User() {
-    }
-
-    public User(Long id) {
-        this.id = id;
-    }    
-
-    public User(Long id, String name, @Email(message = "E-mail ja esta cadastrado no sistema") String email,
-            @NotNull(message = "Senha invalida") String password) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
 
     @Override
     public int hashCode() {
@@ -151,8 +121,6 @@ public class User {
             return false;
         return true;
     }
-
-  
 
   
     
