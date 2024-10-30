@@ -173,4 +173,29 @@ public class UserLoanController {
 
     }
 
+
+    @GetMapping("/searchByName/{name}")
+public ResponseEntity<Object> getUserByName(@PathVariable String name) {
+    try {
+        List<UserLoan> users = userLoanService.getUserByName(name);
+        return ResponseEntity.ok(users);
+    } catch (RuntimeException e) {
+        ApiErrorResponse errorResponse = new ApiErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                "Not Found",
+                e.getMessage(),
+                "/api/userLoan/searchByName/" + name);
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    } catch (Exception e) {
+        ApiErrorResponse errorResponse = new ApiErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Internal Server Error",
+                "Erro ao buscar o usuário pelo nome",
+                "/api/userLoan/searchByName/" + name);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+}
+
+
 }

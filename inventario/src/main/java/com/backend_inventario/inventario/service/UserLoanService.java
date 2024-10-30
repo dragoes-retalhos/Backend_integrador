@@ -49,4 +49,12 @@ public class UserLoanService {
             throw new ResourceNotFoundException("Usuário não encontrado com ID: " + id);
         }
     }
+
+    public List<UserLoan> getUserByName(String name) {
+        List<UserLoan> users = userRepository.findByNameContaining(name);
+        if (users.isEmpty()) {
+            throw new ResourceNotFoundException("Usuário não encontrado com nome: " + name);
+        }
+        return users;
+    }
 }

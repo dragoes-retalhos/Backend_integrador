@@ -50,6 +50,7 @@ public class UserLoan {
     private TypeUserLoanEnum typeUserLoanEnum;
 
     @OneToMany(mappedBy = "userLoan")
+    @JsonIgnore
     private List<Loan> loans;
 
     
