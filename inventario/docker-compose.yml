@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb_container2
+    environment:
+      MYSQL_ROOT_PASSWORD: Clos$Hc3
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: eu
+      MYSQL_PASSWORD: Clos$HC3
+      # Opcional: definir TZ, caso queira especificar o fuso horário
+      TZ: America/Sao_Paulo
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql  # Monta o script de inicialização
+      - /etc/localtime:/etc/localtime:ro  # Montando o arquivo de configuração de tempo do host
+    networks:
+      - spring-mariadb-network
+
+  app:
+    build: .
+    container_name: spring_app_container2
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mariadb
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://mariadb:3306/mydb
+      SPRING_DATASOURCE_USERNAME: eu
+      SPRING_DATASOURCE_PASSWORD: Clos$HC3
+    networks:
+      - spring-mariadb-network
+    volumes:
+      - /etc/localtime:/etc/localtime:ro  # Montando o arquivo de configuração de tempo do host
+
+networks:
+  spring-mariadb-network:

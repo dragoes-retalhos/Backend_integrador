@@ -1,4 +1,3 @@
-
 package com.backend_inventario.inventario.controller;
 
 import java.util.List;
@@ -16,24 +15,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backend_inventario.inventario.entity.User;
-import com.backend_inventario.inventario.service.UserService;
+import com.backend_inventario.inventario.entity.UserLoan;
+import com.backend_inventario.inventario.service.UserLoanService;
 import com.backend_inventario.inventario.util.ApiErrorResponse;
 
 import jakarta.validation.Valid;
 
-@RestController
-@RequestMapping("/api/user")
-public class UserController {
 
+@RestController
+@RequestMapping("/api/userLoan")
+public class UserLoanController {
+    
+
+ 
     @Autowired
-    private UserService userService;
+    private UserLoanService userLoanService;
 
     @PostMapping
-    public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
+    public ResponseEntity<Object> createUser(@Valid @RequestBody UserLoan userLoan) {
         try {
 
-            User createdUser = userService.createUser(user);
+            UserLoan createdUser = userLoanService.createUser(userLoan);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
 
         } catch (DataIntegrityViolationException e) {
@@ -42,7 +44,7 @@ public class UserController {
                     HttpStatus.CONFLICT.value(),
                     "Conflict",
                     "Email já cadastrado",
-                    "/api/users");
+                    "/api/userLoan");
 
             return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
 
@@ -52,7 +54,7 @@ public class UserController {
                     HttpStatus.INTERNAL_SERVER_ERROR.value(),
                     "Internal Server Error",
                     "Erro interno no servidor",
-                    "/api/users");
+                    "/api/userLoan");
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
@@ -62,7 +64,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity<Object> getAllUsers() {
         try {
-            List<User> users = userService.getAllUsers();
+            List<UserLoan> users = userLoanService.getAllUsers();
             if (users.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }
@@ -72,7 +74,7 @@ public class UserController {
                     HttpStatus.INTERNAL_SERVER_ERROR.value(),
                     "Internal Server Error",
                     "Erro ao buscar os usuários",
-                    "/api/users");
+                    "/api/userLoan");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
@@ -80,14 +82,14 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> getIdUser(@PathVariable Long id) {
         try {
-            User user = userService.getUserById(id);
-            return ResponseEntity.ok(user);
+            UserLoan userLoan = userLoanService.getUserById(id);
+            return ResponseEntity.ok(userLoan);
         } catch (RuntimeException e) {
             ApiErrorResponse errorResponse = new ApiErrorResponse(
                     HttpStatus.NOT_FOUND.value(),
                     "Not Found",
                     e.getMessage(),
-                    "/api/users/" + id);
+                    "/api/userLoan/" + id);
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
 
@@ -96,17 +98,17 @@ public class UserController {
                     HttpStatus.INTERNAL_SERVER_ERROR.value(),
                     "Internal Server Error",
                     "Erro ao buscar o usuário",
-                    "/api/users/" + id);
+                    "/api/userLoan/" + id);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 
     @PutMapping
-    public ResponseEntity<Object> updateUser(@Valid @RequestBody User user) {
+    public ResponseEntity<Object> updateUser(@Valid @RequestBody UserLoan userLoan) {
 
         try {
 
-            User updateUser = userService.updateUser(user);
+            UserLoan updateUser = userLoanService.updateUser(userLoan);
             return ResponseEntity.status(HttpStatus.CREATED).body(updateUser);
 
         } catch (DataIntegrityViolationException e) {
@@ -115,7 +117,7 @@ public class UserController {
                     HttpStatus.CONFLICT.value(),
                     "Conflict",
                     "Email já cadastrado",
-                    "/api/users");
+                    "/api/userLoan");
 
             return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
 
@@ -124,7 +126,7 @@ public class UserController {
                     HttpStatus.NOT_FOUND.value(),
                     "Not Found",
                     e.getMessage(),
-                    "/api/users/" + user.getId());
+                    "/api/userLoan/" + userLoan.getId());
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
 
@@ -134,7 +136,7 @@ public class UserController {
                     HttpStatus.INTERNAL_SERVER_ERROR.value(),
                     "Internal Server Error",
                     "Erro interno no servidor",
-                    "/api/users");
+                    "/api/userLoan");
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
@@ -146,7 +148,7 @@ public class UserController {
 
         try {
 
-            userService.deleteUser(id);
+            userLoanService.deleteUser(id);
             return ResponseEntity.noContent().build();
 
         } catch (RuntimeException e) {
@@ -154,7 +156,7 @@ public class UserController {
                     HttpStatus.NOT_FOUND.value(),
                     "Not Found",
                     e.getMessage(),
-                    "/api/users/" + id);
+                    "/api/userLoan/" + id);
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
 
@@ -164,7 +166,7 @@ public class UserController {
                     HttpStatus.INTERNAL_SERVER_ERROR.value(),
                     "Internal Server Error",
                     "Erro interno no servidor",
-                    "/api/users");
+                    "/api/userLoan");
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }

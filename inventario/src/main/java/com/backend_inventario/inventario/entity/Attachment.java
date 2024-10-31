@@ -2,6 +2,8 @@ package com.backend_inventario.inventario.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +22,7 @@ public class Attachment {
     @NonNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_attachment", nullable = false)
-    private Long id_attachment;
+    private Long id;
     
     @Column(name = "name_attachment", nullable = true)
     private String nameAttachment;
@@ -41,32 +43,38 @@ public class Attachment {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "laboratory_item_id_laboratory_item_heritage")
-    private LaboratoryItem associatedLaboratoryItem;
+    @JoinColumn(name = "laboratory_item_id_laboratory_item_heritage", nullable = true)
+    @JsonIgnore
+    private LaboratoryItem laboratoryItem;
+
+    @ManyToOne
+    @JoinColumn(name = "maintenance_id_maintenance", nullable = true) 
+    @JsonIgnore
+    private Maintenance maintenance;
 
     public Attachment() {
         
     }
 
-    public Attachment(Long id_attachment, String nameAttachment, String pathAttachment, String typeAttachment,
+    public Attachment(Long id, String nameAttachment, String pathAttachment, String typeAttachment,
             Long sizeAttachment, LocalDateTime creationDate, String description,
-            LaboratoryItem associatedLaboratoryItem) {
-        this.id_attachment = id_attachment;
+            LaboratoryItem laboratoryItem) {
+        this.id = id;
         this.nameAttachment = nameAttachment;
         this.pathAttachment = pathAttachment;
         this.typeAttachment = typeAttachment;
         this.sizeAttachment = sizeAttachment;
         this.creationDate = creationDate;
         this.description = description;
-        this.associatedLaboratoryItem = associatedLaboratoryItem;
+        this.laboratoryItem = laboratoryItem;
     }
 
     public Long getId_attachment() {
-        return id_attachment;
+        return id;
     }
 
-    public void setId_attachment(Long id_attachment) {
-        this.id_attachment = id_attachment;
+    public void setId_attachment(Long id) {
+        this.id = id;
     }
 
     public String getNameAttachment() {
@@ -117,19 +125,29 @@ public class Attachment {
         this.description = description;
     }
 
-    public LaboratoryItem getAssociatedLaboratoryItem() {
-        return associatedLaboratoryItem;
+  
+
+    public LaboratoryItem getLaboratoryItem() {
+        return laboratoryItem;
     }
 
-    public void setAssociatedLaboratoryItem(LaboratoryItem associatedLaboratoryItem) {
-        this.associatedLaboratoryItem = associatedLaboratoryItem;
+    public void setLaboratoryItem(LaboratoryItem laboratoryItem) {
+        this.laboratoryItem = laboratoryItem;
+    }
+
+    public Maintenance getMaintenance() {
+        return maintenance;
+    }
+
+    public void setMaintenance(Maintenance maintenance) {
+        this.maintenance = maintenance;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id_attachment == null) ? 0 : id_attachment.hashCode());
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
     }
 
@@ -142,14 +160,13 @@ public class Attachment {
         if (getClass() != obj.getClass())
             return false;
         Attachment other = (Attachment) obj;
-        if (id_attachment == null) {
-            if (other.id_attachment != null)
+        if (id == null) {
+            if (other.id != null)
                 return false;
-        } else if (!id_attachment.equals(other.id_attachment))
+        } else if (!id.equals(other.id))
             return false;
         return true;
     }
 
-    
-    
+
 }

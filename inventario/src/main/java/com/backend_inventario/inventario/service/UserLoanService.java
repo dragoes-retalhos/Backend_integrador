@@ -1,38 +1,39 @@
 package com.backend_inventario.inventario.service;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import com.backend_inventario.inventario.entity.User;
-import com.backend_inventario.inventario.repository.UserRepository;
+import com.backend_inventario.inventario.entity.UserLoan;
+import com.backend_inventario.inventario.repository.UserLoanRepository;
 import com.backend_inventario.inventario.util.ResourceNotFoundException;
 
 import jakarta.validation.Valid;
 
+
 @Service
 @Validated
-public class UserService {
-   
+public class UserLoanService {
     @Autowired
-    private UserRepository userRepository;
+    private UserLoanRepository userRepository;
 
-    public User createUser(@Valid User user) {
-        return userRepository.save(user);
+    public UserLoan createUser(@Valid UserLoan userLoan) {
+        return userRepository.save(userLoan);
     }
 
-    public List<User> getAllUsers() {
+    public List<UserLoan> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public User getUserById(Long id) {
+    public UserLoan getUserById(Long id) {
         return userRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com ID: " + id));
     }
 
-    public User updateUser(User newUser) {
+    public UserLoan updateUser(UserLoan newUser) {
         validateUserExists(newUser.getId()); 
         return userRepository.save(newUser);
     }

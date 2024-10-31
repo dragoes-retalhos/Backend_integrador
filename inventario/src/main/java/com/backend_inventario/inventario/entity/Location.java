@@ -28,16 +28,16 @@ public class Location {
 
     @ManyToOne
     @JoinColumn(name = "laboratory_item_id_laboratory_item")
-    private LaboratoryItem associatedLaboratoryItem;
+    private LaboratoryItem LaboratoryItem;
 
     public Location() {
     }
 
-    public Location(Long idLocation, String building, String room, LaboratoryItem associatedLaboratoryItem) {
+    public Location(Long idLocation, String building, String room, LaboratoryItem LaboratoryItem) {
         this.idLocation = idLocation;
         this.building = building;
         this.room = room;
-        this.associatedLaboratoryItem = associatedLaboratoryItem;
+        this.LaboratoryItem = LaboratoryItem;
     }
 
     public Long getIdLocation() {
@@ -65,11 +65,11 @@ public class Location {
     }
 
     public LaboratoryItem getAssociatedLaboratoryItem() {
-        return associatedLaboratoryItem;
+        return LaboratoryItem;
     }
 
-    public void setAssociatedLaboratoryItem(LaboratoryItem associatedLaboratoryItem) {
-        this.associatedLaboratoryItem = associatedLaboratoryItem;
+    public void setAssociatedLaboratoryItem(LaboratoryItem LaboratoryItem) {
+        this.LaboratoryItem = LaboratoryItem;
     }
 
     @Override
