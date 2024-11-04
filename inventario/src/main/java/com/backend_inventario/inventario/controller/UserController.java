@@ -23,7 +23,7 @@ import com.backend_inventario.inventario.util.ApiErrorResponse;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("code ")
 public class UserController {
 
     @Autowired
