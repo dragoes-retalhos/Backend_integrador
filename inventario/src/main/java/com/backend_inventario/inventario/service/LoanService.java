@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.backend_inventario.inventario.entity.Loan;
 import com.backend_inventario.inventario.entity.UserLoan;
+import com.backend_inventario.inventario.entity.dto.LoanSumaryViewDto;
 import com.backend_inventario.inventario.repository.LoanRepository;
+import com.backend_inventario.inventario.repository.LoanSumaryViewRepository;
 import com.backend_inventario.inventario.util.ResourceNotFoundException;
 
 import jakarta.persistence.EntityManager;
@@ -18,6 +20,9 @@ public class LoanService {
 
     @Autowired
     private LoanRepository loanRepository;
+
+    @Autowired
+    private LoanSumaryViewRepository loanSumaryViewRepository;
 /* 
     @Autowired
     private LaboratoryItemRepository laboratoryItemRepository;
@@ -42,6 +47,10 @@ public class LoanService {
         }
 
         return loanRepository.save(loan);
+    }
+
+    public List<LoanSumaryViewDto> getLoansDinamic(){
+        return loanSumaryViewRepository.findAll();
     }
 
   /*   
