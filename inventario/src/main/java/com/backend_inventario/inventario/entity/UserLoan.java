@@ -30,19 +30,19 @@ public class UserLoan {
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
-    
+
     @Column(name = "rna", unique = true)
     private String rna;
-    
+
     @Column(name = "enterprise")
     private String enterprise;
-    
+
     @Column(name = "identification", unique = true)
     private String identification;
-    
+
     @Column(name = "phone", unique = true, nullable = false)
     private String phone;
-   
+
     @Column(name = "status")
     private StatusUserAndLoanEnum statusUserEnum;
 
@@ -52,7 +52,7 @@ public class UserLoan {
     @OneToMany(mappedBy = "userLoan")
     private List<Loan> loans;
 
-    
+
     public UserLoan() {}
 
     public UserLoan(Long id){
@@ -63,9 +63,9 @@ public class UserLoan {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.rna = rna;
-        this.enterprise = enterprise;
-        this.identification = identification;
+        this.rna = rna; //aluno
+        this.enterprise = enterprise; //empresa
+        this.identification = identification; //chacha
         this.phone = phone;
         this.statusUserEnum = statusUserEnum;
         this.typeUserLoanEnum = typeUserLoanEnum;
@@ -79,7 +79,7 @@ public class UserLoan {
         }
     }
 
-    
+
     public long getId() {
         return id;
     }
