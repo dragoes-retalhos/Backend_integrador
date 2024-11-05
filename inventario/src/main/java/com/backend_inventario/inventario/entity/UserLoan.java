@@ -30,19 +30,19 @@ public class UserLoan {
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
-    
+
     @Column(name = "rna", unique = true)
     private String rna;
-    
+
     @Column(name = "enterprise")
     private String enterprise;
-    
+
     @Column(name = "identification", unique = true)
     private String identification;
-    
+
     @Column(name = "phone", unique = true, nullable = false)
     private String phone;
-   
+
     @Column(name = "status")
     private StatusUserAndLoanEnum statusUserEnum;
 
@@ -50,29 +50,26 @@ public class UserLoan {
     private TypeUserLoanEnum typeUserLoanEnum;
 
     @OneToMany(mappedBy = "userLoan")
-    @JsonIgnore
     private List<Loan> loans;
 
-    
+
     public UserLoan() {}
 
     public UserLoan(Long id){
         this.id = id;
     }
-   
     public UserLoan(@NotNull long id, String name, String email, String rna, String enterprise, String identification,
                     String phone, StatusUserAndLoanEnum statusUserEnum, TypeUserLoanEnum typeUserLoanEnum) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.rna = rna;
-        this.enterprise = enterprise;
-        this.identification = identification;
+        this.rna = rna; //aluno
+        this.enterprise = enterprise; //empresa
+        this.identification = identification; //chacha
         this.phone = phone;
         this.statusUserEnum = statusUserEnum;
         this.typeUserLoanEnum = typeUserLoanEnum;
     }
-
 
 
     @PrePersist
@@ -82,8 +79,7 @@ public class UserLoan {
         }
     }
 
-    
-    
+
     public long getId() {
         return id;
     }
@@ -180,6 +176,5 @@ public class UserLoan {
         UserLoan other = (UserLoan) obj;
         return id == other.id;
     }
-
 
 }
