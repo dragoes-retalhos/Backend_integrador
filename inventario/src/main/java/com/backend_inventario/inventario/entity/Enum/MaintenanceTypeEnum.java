@@ -1,5 +1,7 @@
 package com.backend_inventario.inventario.entity.Enum;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum MaintenanceTypeEnum {
     
     PREVENTIVE("PREVENTIVA"),
@@ -13,6 +15,7 @@ public enum MaintenanceTypeEnum {
     }
 
     @Override
+    @JsonValue
     public String toString() {
         return descricaoPortugues;
     }

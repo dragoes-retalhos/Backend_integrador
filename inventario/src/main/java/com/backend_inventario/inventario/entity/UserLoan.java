@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.backend_inventario.inventario.entity.Enum.StatusUserAndLoanEnum;
 import com.backend_inventario.inventario.entity.Enum.TypeUserLoanEnum;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -50,7 +49,6 @@ public class UserLoan {
     private TypeUserLoanEnum typeUserLoanEnum;
 
     @OneToMany(mappedBy = "userLoan")
-    @JsonIgnore
     private List<Loan> loans;
 
     

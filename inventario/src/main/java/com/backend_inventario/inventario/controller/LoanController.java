@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend_inventario.inventario.entity.Loan;
+import com.backend_inventario.inventario.entity.dto.ListLoanByItemDto;
 import com.backend_inventario.inventario.entity.dto.LoanSumaryViewDto;
-import com.backend_inventario.inventario.repository.LoanSumaryViewRepository;
 import com.backend_inventario.inventario.service.LoanService;
 import com.backend_inventario.inventario.util.ApiErrorResponse;
 
@@ -24,10 +24,7 @@ public class LoanController {
 
     @Autowired
     private LoanService loanService;
-
-    @Autowired
-    private LoanSumaryViewRepository loanSumaryViewRepository;
-
+    /* REMOVIDO TEMPORARIAMENTE, PROVAVELMENTE NAO SERA IMPLEMENTADO
     @GetMapping
     public ResponseEntity<Object> getAllLoans() {
         try {
@@ -52,7 +49,7 @@ public class LoanController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
-
+    */
     @PostMapping
     public ResponseEntity<Object> createLoan(@RequestBody Loan loan) {
         try {
@@ -130,6 +127,29 @@ public class LoanController {
                     "Internal Server Error",
                     "Erro ao buscar o empréstimo",
                     "/api/loan/dinamic"); 
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
+
+    @GetMapping("/LoanItemHistory/{itemId}") /* retorna historico de emprestimo de um item */
+    public ResponseEntity<Object> getLoanIntemHistory(@PathVariable Long itemId){
+        try {
+            List <ListLoanByItemDto> loans = loanService.getLoanIntemHistory(itemId);
+            return ResponseEntity.ok(loans);
+        } catch (RuntimeException e) {
+            ApiErrorResponse errorResponse = new ApiErrorResponse(
+                    HttpStatus.NOT_FOUND.value(),
+                    "Not Found",
+                    e.getMessage(),
+                    "/api/loan/LoanItemHistory/" + itemId);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        } catch (Exception e) {
+            ApiErrorResponse errorResponse = new ApiErrorResponse(
+                    HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                    "Internal Server Error",
+                    "Erro ao buscar o empréstimo",
+                    "/api/loan/LoanItemHistory/");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }

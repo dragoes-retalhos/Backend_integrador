@@ -2,8 +2,6 @@ package com.backend_inventario.inventario.entity;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,7 +34,6 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
     private List<Loan> loans;
 
     public Long getId() {
@@ -89,8 +86,7 @@ public class User {
         this.id = id;
     }    
 
-    public User(Long id, String name, @Email(message = "E-mail ja esta cadastrado no sistema") String email,
-            @NotNull(message = "Senha invalida") String password) {
+    public User(Long id, String name,String email,String password) {
         this.id = id;
         this.name = name;
         this.email = email;
