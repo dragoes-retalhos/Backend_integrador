@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +18,11 @@ import com.backend_inventario.inventario.entity.dto.ListItemViewDto;
 import com.backend_inventario.inventario.service.LaboratoryItemService;
 import com.backend_inventario.inventario.util.ApiErrorResponse;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/item")
+@Validated
 public class LaboratoryItemController {
 
     @Autowired
@@ -96,7 +100,7 @@ public class LaboratoryItemController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createItem(@RequestBody LaboratoryItem laboratoryItem) {
+    public ResponseEntity<Object> createItem(@Valid @RequestBody LaboratoryItem laboratoryItem) {
         try {
             LaboratoryItem newLaboratoryItem = laboratoryItemService.createItem(laboratoryItem);
             return ResponseEntity.status(HttpStatus.CREATED).body(newLaboratoryItem);

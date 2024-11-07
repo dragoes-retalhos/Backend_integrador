@@ -8,12 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.backend_inventario.inventario.entity.Loan;
 import com.backend_inventario.inventario.entity.UserLoan;
+import com.backend_inventario.inventario.entity.dto.ListLoanByItemDto;
 import com.backend_inventario.inventario.entity.dto.LoanSumaryViewDto;
 import com.backend_inventario.inventario.repository.LoanRepository;
 import com.backend_inventario.inventario.repository.LoanSumaryViewRepository;
 import com.backend_inventario.inventario.util.ResourceNotFoundException;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 
 @Service
 public class LoanService {
@@ -79,4 +81,16 @@ public class LoanService {
         Optional.ofNullable(dto.getDescription()) // Supondo que LoanDTO tenha uma descrição
                 .ifPresent(loan::setDescription);
     }*/
+
+    public List<ListLoanByItemDto> getLoanIntemHistory(Long itemId) {
+        String jpql = "SELECT new com.backend_inventario.inventario.entity.dto.ListLoanByItemDto(l.id, l.loanDate, l.returnDate, l.status, l.user.name) " +
+                      "FROM Loan l " +
+                      "JOIN l.laboratoryItems li " +
+                      "WHERE li.id = :itemId";
+
+        TypedQuery<ListLoanByItemDto> query = entityManager.createQuery(jpql, ListLoanByItemDto.class);
+        query.setParameter("itemId", itemId);
+
+        return query.getResultList();
+    }
 }
