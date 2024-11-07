@@ -268,11 +268,38 @@ INSERT INTO `mydb`.`user` (name_user, email, password) VALUES
 
 
 
-INSERT INTO `mydb`.`user_loan` (name, email, rna, enterprise, identification, phone) VALUES
-('Alice Johnson', 'alice.johnson@example.com', 'RNA001', 'Company A', 'C001', '1234567890'),
-('Bob Smith', 'bob.smith@example.com', 'RNA002', 'Company B', 'C002', '2345678901'),
-('Charlie Brown', 'charlie.brown@example.com', 'RNA003', 'Company C', 'C003', '3456789012'),
-('Diana Prince', 'diana.prince@example.com', 'RNA004', 'Company D', 'C004', '4567890123');
+INSERT INTO `mydb`.`user_loan` 
+  (`name`, `email`, `rna`, `enterprise`, `identification`, `phone`, `status`, `type_user`) 
+VALUES 
+  ('João Silva', 'joao.silva1@example.com', '123456789', 'Empresa A', 'ID123456', '11987654321', 1, 1),
+  ('João Silva', 'joao.silva2@example.com', '987654321', 'Empresa B', 'ID987654', '11912345678', 1, 2),
+  ('Maria Oliveira', 'maria.oliveira@example.com', '112233445', 'Empresa C', 'ID112233', '11876543210', 1, 1),
+  ('Maria Oliveira', 'maria.oliveira2@example.com', '223344556', 'Empresa D', 'ID223344', '11765432109', 0, 2),
+  ('Carlos Pereira', 'carlos.pereira@example.com', '334455667', 'Empresa E', 'ID334455', '11654321098', 1, 1),
+  ('Ana Costa', 'ana.costa@example.com', '445566778', 'Empresa F', 'ID445566', '11543210987', 1, 2),
+  ('Carlos Pereira', 'carlos.pereira2@example.com', '556677889', 'Empresa G', 'ID556677', '11432109876', 1, 1),
+  ('Patricia Souza', 'patricia.souza@example.com', '667788990', 'Empresa H', 'ID667788', '11321098765', 0, 2);
+
+
+
+-- Inserindo Empréstimos
+INSERT INTO `mydb`.`loan` (loan_date, return_date, status, user_id_user, user_loan_iduser_loan) VALUES
+('2024-09-01 10:00:00', '2024-09-15 10:00:00', 1, 1, 1),
+('2024-09-05 15:30:00', '2024-09-20 15:30:00', 0, 2, 2),
+('2024-09-10 12:00:00', NULL, 1, 3, 3),
+('2024-09-12 14:00:00', '2024-09-25 14:00:00', 1, 4, 1),
+('2024-09-20 09:30:00', NULL, 0, 5, 2);
+
+-- Associando Itens aos Empréstimos
+INSERT INTO `mydb`.`loan_has_laboratory_item` (loan_id_loan, laboratory_item_id_laboratory_item) VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(3, 4),
+(4, 5),
+(5, 6),
+(5, 7);
+
 
 
 -- =============================================
@@ -283,6 +310,26 @@ CREATE VIEW list_items AS
 SELECT name_item, description, COUNT(*) AS amount
 FROM laboratory_item
 GROUP BY name_item, description;
+
+
+CREATE VIEW loan_summary AS
+SELECT 
+    l.id_loan AS loan_id,
+    l.status AS loan_status,
+    l.return_date AS return_date,
+    ul.name AS user_name,
+    GROUP_CONCAT(li.name_item SEPARATOR ', ') AS loaned_items
+FROM 
+    loan l
+JOIN 
+    user_loan ul ON l.user_loan_iduser_loan = ul.iduser_loan
+JOIN 
+    loan_has_laboratory_item lli ON l.id_loan = lli.loan_id_loan
+JOIN 
+    laboratory_item li ON lli.laboratory_item_id_laboratory_item = li.id_laboratory_item_heritage
+GROUP BY 
+    l.id_loan, l.status, l.return_date, ul.name;
+
 
 
 

@@ -1,5 +1,7 @@
 package com.backend_inventario.inventario.entity.Enum;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum StatusItemEnum {
 
     ACTIVE("ATIVO"),
@@ -14,6 +16,7 @@ public enum StatusItemEnum {
     }
 
     @Override
+    @JsonValue
     public String toString() {
         return descricaoPortugues;
     }

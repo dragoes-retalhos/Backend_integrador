@@ -14,6 +14,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -59,6 +60,9 @@ public class LaboratoryItem {
     @OneToMany(mappedBy = "laboratoryItem", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Attachment> attachments;
+
+    @ManyToMany(mappedBy = "laboratoryItems")
+    private List<Loan> loans;
 
     
     public LaboratoryItem() {

@@ -143,15 +143,15 @@ public class UserLoanController {
 
     }
 
-    @DeleteMapping
-    public ResponseEntity<Object> deletUser(@PathVariable Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
 
         try {
-
             userLoanService.deleteUser(id);
             return ResponseEntity.noContent().build();
 
         } catch (RuntimeException e) {
+            // Retorna erro 404 caso o usuário não seja encontrado
             ApiErrorResponse errorResponse = new ApiErrorResponse(
                     HttpStatus.NOT_FOUND.value(),
                     "Not Found",
@@ -161,16 +161,16 @@ public class UserLoanController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
 
         } catch (Exception e) {
-
+            // Retorna erro 500 para qualquer erro interno no servidor
             ApiErrorResponse errorResponse = new ApiErrorResponse(
                     HttpStatus.INTERNAL_SERVER_ERROR.value(),
                     "Internal Server Error",
                     "Erro interno no servidor",
-                    "/api/userLoan");
+                    "/api/userLoan/" + id);
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
-
     }
+
 
 }
