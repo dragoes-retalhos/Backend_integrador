@@ -16,14 +16,17 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(@NonNull CorsRegistry registry) {
         
-        registry.addMapping("/**") // Permite CORS para todas as rotas
-                .allowedOrigins(
-                    "http://localhost:8080", // Origem para testes com Flutter em um navegador local
-                    "http://10.0.2.2:8080"  // Origem para testes no emulador Android (10.0.2.2 redireciona para localhost)
-                )
-                .allowedMethods("GET", "POST", "PUT", "DELETE") // Métodos permitidos
-                .allowedHeaders("*") // Permitir todos os cabeçalhos
-                .allowCredentials(true); // Permitir credenciais
+        registry.addMapping("/**") 
+                
+        .allowedOrigins("*") 
+               
+        .allowedMethods("GET", "POST", "PUT", "DELETE") 
+               
+        .allowCredentials(false)
+        
+        .maxAge(3600); 
+
+        
     }
 
     @Bean
