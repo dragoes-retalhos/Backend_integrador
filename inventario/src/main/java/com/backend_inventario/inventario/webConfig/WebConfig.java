@@ -16,36 +16,15 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(@NonNull CorsRegistry registry) {
         
-<<<<<<< HEAD
-        registry.addMapping("/**") // Permite CORS para todas as rotas
-                .allowedOrigins(
-                    "http://localhost:8080", // Origem para testes com Flutter em um navegador local
-                    "http://10.0.2.2:8080"  // Origem para testes no emulador Android (10.0.2.2 redireciona para localhost)
-                )
-                .allowedMethods("GET", "POST", "PUT", "DELETE") // Métodos permitidos
-                .allowedHeaders("*") // Permitir todos os cabeçalhos
-                .allowCredentials(true); // Permitir credenciais
-=======
         registry.addMapping("/**") 
                 
         .allowedOrigins("*") 
                
-        .allowedMethods("GET", "POST", "PUT", "DELETE") 
-               
-        .allowCredentials(false)
-        
-        .maxAge(3600); 
-
-        
->>>>>>> 03d0876 (sei la)
+        .allowedMethods("GET", "POST", "PUT", "DELETE")  
+                      
+        .maxAge(3600) 
+                
+        .allowCredentials(false); 
     }
 
-    @Bean
-    public HttpMessageConverter<Object> jsonMessageConverter() {
-        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        converter.setSupportedMediaTypes(List.of(
-            MediaType.APPLICATION_JSON
-        ));
-        return converter;
-    }
 }
