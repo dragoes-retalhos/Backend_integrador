@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.backend_inventario.inventario.entity.Enum.StatusUserAndLoanEnum;
 import com.backend_inventario.inventario.entity.Enum.TypeUserLoanEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,6 +19,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "user_loan")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class UserLoan {
 
     @Id
@@ -49,6 +52,7 @@ public class UserLoan {
     private TypeUserLoanEnum typeUserLoanEnum;
 
     @OneToMany(mappedBy = "userLoan")
+    @JsonIgnore
     private List<Loan> loans;
 
 

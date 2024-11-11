@@ -2,6 +2,9 @@ package com.backend_inventario.inventario.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +18,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
 
     @Id
@@ -34,6 +38,7 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Loan> loans;
 
     public Long getId() {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.backend_inventario.inventario.entity.Loan;
 import com.backend_inventario.inventario.entity.dto.ListLoanByItemDto;
+import com.backend_inventario.inventario.entity.dto.LoanRequestDTO;
 import com.backend_inventario.inventario.entity.dto.LoanSumaryViewDto;
 import com.backend_inventario.inventario.service.LoanService;
 import com.backend_inventario.inventario.util.ApiErrorResponse;
@@ -51,9 +52,9 @@ public class LoanController {
     }
     */
     @PostMapping
-    public ResponseEntity<Object> createLoan(@RequestBody Loan loan) {
+    public ResponseEntity<Object> createLoan(@RequestBody LoanRequestDTO loanRequest) {
         try {
-            Loan newLoan = loanService.createLoan(loan);
+            Loan newLoan = loanService.createLoan(loanRequest.getLoan(), loanRequest.getLaboratoryItemIds());
             return ResponseEntity.status(HttpStatus.CREATED).body(newLoan);
         } catch (RuntimeException e) {
             ApiErrorResponse errorResponse = new ApiErrorResponse(
@@ -132,7 +133,7 @@ public class LoanController {
     }
 
 
-    @GetMapping("/LoanItemHistory/{itemId}") /* retorna historico de emprestimo de um item */
+    @GetMapping("/LoanItemHistory/{itemId}") /* retorna historico de emprestimo */
     public ResponseEntity<Object> getLoanIntemHistory(@PathVariable Long itemId){
         try {
             List <ListLoanByItemDto> loans = loanService.getLoanIntemHistory(itemId);

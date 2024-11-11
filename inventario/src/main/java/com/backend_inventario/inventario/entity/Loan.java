@@ -1,16 +1,16 @@
 package com.backend_inventario.inventario.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 import com.backend_inventario.inventario.entity.Enum.StatusUserAndLoanEnum;
 
 import io.micrometer.common.lang.NonNull;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,11 +41,11 @@ public class Loan {
     @Column(name = "status")
     private StatusUserAndLoanEnum status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id_user", nullable = false) 
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_loan_iduser_loan", nullable = false) 
     private UserLoan userLoan;
 
@@ -55,7 +55,8 @@ public class Loan {
         joinColumns = @JoinColumn(name = "loan_id_loan"),
         inverseJoinColumns = @JoinColumn(name = "laboratory_item_id_laboratory_item")
     )
-    private List<LaboratoryItem> laboratoryItems;
+    private Set<LaboratoryItem> laboratoryItems;
+    
 
 
     public Loan() {}
@@ -64,7 +65,7 @@ public class Loan {
 
     
     public Loan(long id, LocalDateTime loanDate, LocalDateTime returnDate, StatusUserAndLoanEnum status, User user,
-            UserLoan userLoan, List<LaboratoryItem> laboratoryItems) {
+            UserLoan userLoan, Set<LaboratoryItem> laboratoryItems) {
         this.id = id;
         this.loanDate = loanDate;
         this.returnDate = returnDate;
@@ -133,11 +134,11 @@ public class Loan {
         this.userLoan = userLoan;
     }
 
-    public List<LaboratoryItem> getLaboratoryItems() {
+    public Set<LaboratoryItem> getLaboratoryItems() {
         return laboratoryItems;
     }
 
-    public void setLaboratoryItems(List<LaboratoryItem> laboratoryItems) {
+    public void setLaboratoryItems(Set<LaboratoryItem> laboratoryItems) {
         this.laboratoryItems = laboratoryItems;
     }
 
