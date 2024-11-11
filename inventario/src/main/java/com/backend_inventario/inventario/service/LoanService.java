@@ -1,15 +1,17 @@
 package com.backend_inventario.inventario.service;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.backend_inventario.inventario.entity.LaboratoryItem;
 import com.backend_inventario.inventario.entity.Loan;
-import com.backend_inventario.inventario.entity.UserLoan;
 import com.backend_inventario.inventario.entity.dto.ListLoanByItemDto;
 import com.backend_inventario.inventario.entity.dto.LoanSumaryViewDto;
+import com.backend_inventario.inventario.repository.LaboratoryItemRepository;
 import com.backend_inventario.inventario.repository.LoanRepository;
 import com.backend_inventario.inventario.repository.LoanSumaryViewRepository;
 import com.backend_inventario.inventario.util.ResourceNotFoundException;
@@ -25,10 +27,10 @@ public class LoanService {
 
     @Autowired
     private LoanSumaryViewRepository loanSumaryViewRepository;
-/* 
+
     @Autowired
     private LaboratoryItemRepository laboratoryItemRepository;
-*/
+
     @Autowired
     private EntityManager entityManager;
 
@@ -42,12 +44,9 @@ public class LoanService {
     }
 
     @Transactional
-    public Loan createLoan(Loan loan) {
-       
-        if (loan.getUserLoan() != null && loan.getUserLoan().getId() > 0) {
-            loan.setUserLoan(entityManager.getReference(UserLoan.class, loan.getUserLoan().getId()));
-        }
-
+    public Loan createLoan(Loan loan, List<Long> laboratoryItemIds) {
+        List<LaboratoryItem> items = laboratoryItemRepository.findAllById(laboratoryItemIds);
+        loan.setLaboratoryItems(new HashSet<>(items));
         return loanRepository.save(loan);
     }
 
