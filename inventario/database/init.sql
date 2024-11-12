@@ -141,6 +141,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`user_loan` (
 CREATE TABLE IF NOT EXISTS `mydb`.`loan` (
   `id_loan` INT(11) NOT NULL AUTO_INCREMENT,
   `loan_date` TIMESTAMP NOT NULL,
+  `expected_return_date` TIMESTAMP NOT NULL,
   `return_date` TIMESTAMP NULL DEFAULT NULL,
   `status` INT(11) NOT NULL,
   `user_id_user` INT(11) NOT NULL,
@@ -283,12 +284,12 @@ VALUES
 
 
 -- Inserindo Empréstimos
-INSERT INTO `mydb`.`loan` (loan_date, return_date, status, user_id_user, user_loan_iduser_loan) VALUES
-('2024-09-01 10:00:00', '2024-09-15 10:00:00', 1, 1, 1),
-('2024-09-05 15:30:00', '2024-09-20 15:30:00', 0, 2, 2),
-('2024-09-10 12:00:00', NULL, 1, 3, 3),
-('2024-09-12 14:00:00', '2024-09-25 14:00:00', 1, 4, 1),
-('2024-09-20 09:30:00', NULL, 0, 5, 2);
+INSERT INTO `mydb`.`loan` (loan_date, expected_return_date, return_date, status, user_id_user, user_loan_iduser_loan) VALUES
+('2024-09-01 10:00:00', '2024-09-15 10:00:00', NULL, 1, 1, 1),
+('2024-09-05 15:30:00', '2024-09-20 15:30:00', NULL, 0, 2, 2),
+('2024-09-10 12:00:00', NULL, NULL, 1, 3, 3),
+('2024-09-12 14:00:00', '2024-09-25 14:00:00', NULL, 1, 4, 1),
+('2024-09-20 09:30:00', NULL, NULL, 0, 5, 2);
 
 -- Associando Itens aos Empréstimos
 INSERT INTO `mydb`.`loan_has_laboratory_item` (loan_id_loan, laboratory_item_id_laboratory_item) VALUES
@@ -354,7 +355,7 @@ BEFORE UPDATE ON loan
 FOR EACH ROW
 BEGIN
     -- Se o status indicar que o item foi devolvido, atualiza a data de retorno
-    IF NEW.status = 3 THEN  -- Status 1 pode representar "devolvido" (ajuste conforme seu sistema)
+    IF NEW.status = 1 THEN 
         SET NEW.return_date = NOW();
     END IF;
 END$$
@@ -384,6 +385,7 @@ BEGIN
 		SET NEW.delivery_date = NOW();
 	END IF;
 END$$
+
 DELIMITER ;
 
 
@@ -399,6 +401,20 @@ END$$
 
 DELIMITER ;
 
+
+DELIMITER $$
+
+CREATE TRIGGER update_item_status_on_loan
+AFTER INSERT ON loan_has_laboratory_item
+FOR EACH ROW
+BEGIN
+    -- Atualiza o status do item emprestado para 3
+    UPDATE laboratory_item
+    SET status = 3
+    WHERE id_laboratory_item_heritage = NEW.laboratory_item_id_laboratory_item;
+END$$
+
+DELIMITER ;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

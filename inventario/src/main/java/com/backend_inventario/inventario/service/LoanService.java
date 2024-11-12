@@ -82,7 +82,7 @@ public class LoanService {
     }*/
 
     public List<ListLoanByItemDto> getLoanIntemHistory(Long itemId) {
-        String jpql = "SELECT new com.backend_inventario.inventario.entity.dto.ListLoanByItemDto(l.id, l.loanDate, l.returnDate, l.status, l.user.name) " +
+        String jpql = "SELECT new com.backend_inventario.inventario.entity.dto.ListLoanByItemDto(l.id, l.loanDate, l.expectedReturnDate, l.returnDate, l.status, l.userLoan.name) " +
                       "FROM Loan l " +
                       "JOIN l.laboratoryItems li " +
                       "WHERE li.id = :itemId";
