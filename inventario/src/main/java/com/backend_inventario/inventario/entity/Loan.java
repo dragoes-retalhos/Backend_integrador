@@ -1,5 +1,6 @@
 package com.backend_inventario.inventario.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -34,6 +35,9 @@ public class Loan {
     @Column(name = "loan_date", nullable = false)
     private LocalDateTime loanDate;
 
+    @Column(name = "expected_return_date", nullable = false)
+    private LocalDate expectedReturnDate;
+    
     @Column(name = "return_date")
     private LocalDateTime returnDate;
 
@@ -62,18 +66,20 @@ public class Loan {
     public Loan() {}
 
    
-
-    
-    public Loan(long id, LocalDateTime loanDate, LocalDateTime returnDate, StatusUserAndLoanEnum status, User user,
-            UserLoan userLoan, Set<LaboratoryItem> laboratoryItems) {
+    public Loan(long id, LocalDateTime loanDate, LocalDate expectedReturnDate, LocalDateTime returnDate,
+            StatusUserAndLoanEnum status, User user, UserLoan userLoan, Set<LaboratoryItem> laboratoryItems) {
         this.id = id;
         this.loanDate = loanDate;
+        this.expectedReturnDate = expectedReturnDate;
         this.returnDate = returnDate;
         this.status = status;
         this.user = user;
         this.userLoan = userLoan;
         this.laboratoryItems = laboratoryItems;
     }
+
+
+
 
 
 
@@ -142,6 +148,16 @@ public class Loan {
         this.laboratoryItems = laboratoryItems;
     }
 
+    public LocalDate getExpectedReturnDate() {
+        return expectedReturnDate;
+    }
+
+
+    public void setExpectedReturnDate(LocalDate expectedReturnDate) {
+        this.expectedReturnDate = expectedReturnDate;
+    }
+
+
    
     @Override
     public int hashCode() {
@@ -159,5 +175,7 @@ public class Loan {
         return id == other.id;
     }
 
+
+   
     
 }

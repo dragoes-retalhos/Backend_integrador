@@ -1,5 +1,6 @@
 package com.backend_inventario.inventario.entity.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.backend_inventario.inventario.entity.Enum.StatusUserAndLoanEnum;
@@ -8,6 +9,7 @@ public class ListLoanByItemDto {
 
     private Long id;
     private LocalDateTime loanDate;
+    private LocalDate expectedReturnDate;
     private LocalDateTime returnDate;
     private StatusUserAndLoanEnum status;
     private String nameUser;
@@ -15,15 +17,26 @@ public class ListLoanByItemDto {
     public ListLoanByItemDto() {
     }
 
-   
-    public ListLoanByItemDto(Long id, LocalDateTime loanDate, LocalDateTime returnDate, StatusUserAndLoanEnum status,
-            String nameUser) {
+  
+
+    
+
+
+
+    public ListLoanByItemDto(Long id, LocalDateTime loanDate, LocalDate expectedReturnDate, LocalDateTime returnDate,
+            StatusUserAndLoanEnum status, String nameUser) {
         this.id = id;
         this.loanDate = loanDate;
+        this.expectedReturnDate = expectedReturnDate;
         this.returnDate = returnDate;
         this.status = status;
         this.nameUser = nameUser;
     }
+
+
+
+
+
 
 
     public Long getId() {
@@ -63,6 +76,16 @@ public class ListLoanByItemDto {
 
     public void setNameUser(String nameUser) {
         this.nameUser = nameUser;
+    }
+
+    public LocalDate getExpectedReturnDate() {
+        return expectedReturnDate;
+    }
+
+
+
+    public void setExpectedReturnDate(LocalDate expectedReturnDate) {
+        this.expectedReturnDate = expectedReturnDate;
     }
 
     
