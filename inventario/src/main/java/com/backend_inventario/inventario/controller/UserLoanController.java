@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend_inventario.inventario.entity.UserLoan;
+import com.backend_inventario.inventario.entity.dto.UserLoanRequestDto;
 import com.backend_inventario.inventario.service.UserLoanService;
 import com.backend_inventario.inventario.util.ApiErrorResponse;
 
@@ -172,5 +173,26 @@ public class UserLoanController {
         }
     }
 
+    @GetMapping("/userWithLoans/{userId}")
+public ResponseEntity<Object> getUserWithLoans(@PathVariable Long userId) {
+    try {
+        UserLoanRequestDto userLoanRequestDto = userLoanService.getUserWithLoans(userId);
+        return ResponseEntity.ok(userLoanRequestDto);
+    } catch (RuntimeException e) {
+        ApiErrorResponse errorResponse = new ApiErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                "Not Found",
+                e.getMessage(),
+                "/api/userWithLoans/" + userId);
 
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    } catch (Exception e) {
+        ApiErrorResponse errorResponse = new ApiErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Internal Server Error",
+                "Erro ao buscar o usuário",
+                "/api/userWithLoans/" + userId);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+}
 }
