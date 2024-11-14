@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import com.backend_inventario.inventario.entity.Loan;
 import com.backend_inventario.inventario.entity.UserLoan;
+import com.backend_inventario.inventario.entity.dto.UserLoanRequestDto;
 import com.backend_inventario.inventario.repository.UserLoanRepository;
 import com.backend_inventario.inventario.util.ResourceNotFoundException;
 
+import jakarta.persistence.EntityManager;
 import jakarta.validation.Valid;
 
 
@@ -19,6 +22,10 @@ import jakarta.validation.Valid;
 public class UserLoanService {
     @Autowired
     private UserLoanRepository userRepository;
+
+
+    @Autowired
+    private EntityManager entityManager;
 
     public UserLoan createUser(@Valid UserLoan userLoan) {
         return userRepository.save(userLoan);
@@ -57,4 +64,25 @@ public class UserLoanService {
         }
         return users;
     }
+
+    public UserLoanRequestDto getUserWithLoans(Long userId) {
+        // Primeiro, buscamos o UserLoan pelo ID
+        UserLoan user = entityManager.find(UserLoan.class, userId);
+    
+        if (user == null) {
+            throw new RuntimeException("Usuário não encontrado");
+        }
+    
+        // Depois, buscamos os Loans associados ao UserLoan
+        String jpql = "SELECT l FROM Loan l WHERE l.userLoan.id = :userId";
+        List<Loan> loans = entityManager.createQuery(jpql, Loan.class)
+                                         .setParameter("userId", userId)
+                                         .getResultList();
+    
+        // Instanciamos o DTO passando o usuário e a lista de empréstimos
+        return new UserLoanRequestDto(user, loans);
+    }
+    
+    
+    
 }

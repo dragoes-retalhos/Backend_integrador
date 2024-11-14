@@ -1,6 +1,7 @@
 package com.backend_inventario.inventario.entity.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.backend_inventario.inventario.entity.Enum.StatusUserAndLoanEnum;
 
@@ -21,8 +22,10 @@ public class LoanSumaryViewDto {
     private Long id;
     @Column(name = "loan_status")
     private StatusUserAndLoanEnum status;
-    @Column(name = "return_date")
-    private Date returnDate;
+    @Column(name = "loan_date")
+    private LocalDateTime loanDate;
+    @Column(name = "expected_return_date")
+    private LocalDate expectedReturnDate;
     @Column(name = "user_name")
     private String userName;
     @Column(name = "loaned_items")
@@ -33,14 +36,19 @@ public class LoanSumaryViewDto {
     }
     
    
-    public LoanSumaryViewDto(Long id, StatusUserAndLoanEnum status, Date returnDate, String userName,
-            String loanedItems) {
+   
+    public LoanSumaryViewDto(Long id, StatusUserAndLoanEnum status, LocalDateTime loanDate, LocalDate expectedReturnDate,
+            String userName, String loanedItems) {
         this.id = id;
         this.status = status;
-        this.returnDate = returnDate;
+        this.loanDate = loanDate;
+        this.expectedReturnDate = expectedReturnDate;
         this.userName = userName;
         this.loanedItems = loanedItems;
     }
+
+
+
     public Long getId() {
         return id;
     }
@@ -53,12 +61,7 @@ public class LoanSumaryViewDto {
     public void setStatus(StatusUserAndLoanEnum status) {
         this.status = status;
     }
-    public Date getReturnDate() {
-        return returnDate;
-    }
-    public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
-    }
+   
     public String getUserName() {
         return userName;
     }
@@ -71,6 +74,33 @@ public class LoanSumaryViewDto {
     public void setLoanedItems(String loanedItems) {
         this.loanedItems = loanedItems;
     }
+    
+
+
+
+
+    public LocalDateTime getLoanDate() {
+        return loanDate;
+    }
+
+
+
+    public void setLoanDate(LocalDateTime loanDate) {
+        this.loanDate = loanDate;
+    }
+
+
+
+    public LocalDate getExpectedReturnDate() {
+        return expectedReturnDate;
+    }
+
+
+
+    public void setExpectedReturnDate(LocalDate expectedReturnDate) {
+        this.expectedReturnDate = expectedReturnDate;
+    }
+
 
 
     @Override
