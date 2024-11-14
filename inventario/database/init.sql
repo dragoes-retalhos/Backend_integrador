@@ -317,7 +317,8 @@ CREATE VIEW loan_summary AS
 SELECT 
     l.id_loan AS loan_id,
     l.status AS loan_status,
-    l.return_date AS return_date,
+    DATE_FORMAT(l.loan_date, '%Y-%m-%d %H:%i:%s') AS loan_date,  -- Formatação para LocalDateTime
+    DATE_FORMAT(l.expected_return_date, '%Y-%m-%d') AS expected_return_date,  -- Formatação para LocalDate
     ul.name AS user_name,
     GROUP_CONCAT(li.name_item SEPARATOR ', ') AS loaned_items
 FROM 
@@ -329,9 +330,7 @@ JOIN
 JOIN 
     laboratory_item li ON lli.laboratory_item_id_laboratory_item = li.id_laboratory_item_heritage
 GROUP BY 
-    l.id_loan, l.status, l.return_date, ul.name;
-
-
+    l.id_loan, l.status, l.loan_date, l.expected_return_date, ul.name;
 
 
 -- =============================================
